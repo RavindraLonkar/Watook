@@ -7,5 +7,5 @@ import com.watook.model.User;
 public interface UserService {
 	List<User> findAllUsers();
 
-	User save(User user);
+	Integer save(User user);
 }

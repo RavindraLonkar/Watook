@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.watook.dao.UserDao;
 import com.watook.model.User;
+import com.watook.security.WatookToken;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -20,7 +21,7 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public User save(User user) {
+	public Integer save(User user) {
 		return userDao.save(user);
 	}
 
