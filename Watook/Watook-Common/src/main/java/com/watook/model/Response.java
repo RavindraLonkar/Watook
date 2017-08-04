@@ -4,17 +4,15 @@ public class Response {
     private String status;
     private String reasonCode;
     private Object data;
-	private String token;
      
     public Response(){
          
     }
      
-    public Response(String status, Object data,String resonCode,String token){
+    public Response(String status, Object data,String resonCode){
         this.status = status;
         this.data = data;
-        this.reasonCode=resonCode;
-        this.token=token;
+        this.reasonCode=resonCode;       
     }
  
     public String getStatus() {
@@ -40,14 +38,5 @@ public class Response {
 	public void setReasonCode(String reasonCode) {
 		this.reasonCode = reasonCode;
 	}
-
-	public String getToken() {
-		return token;
-	}
-
-	public void setToken(String token) {
-		this.token = token;
-	}
-
 	
 }

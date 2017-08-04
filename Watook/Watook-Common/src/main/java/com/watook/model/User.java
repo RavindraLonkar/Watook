@@ -19,6 +19,7 @@ public class User {
 	@SerializedName("createddate") private String createdDate;
 	@SerializedName("lastmodifiedby") private String lastModifiedBy;
 	@SerializedName("lastmodifieddate") private String lastModifiedDate;
+	@SerializedName("encryptkey") private String encryptKey;
 	public String getUserID() {
 		return userID;
 	}
@@ -114,6 +115,12 @@ public class User {
 	}
 	public void setLastModifiedDate(String lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;
+	}
+	public String getEncryptKey() {
+		return encryptKey;
+	}
+	public void setEncryptKey(String encryptKey) {
+		this.encryptKey = encryptKey;
 	}
 	
 }

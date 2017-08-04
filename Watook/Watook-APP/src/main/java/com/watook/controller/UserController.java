@@ -13,6 +13,7 @@ import com.watook.model.Response;
 import com.watook.model.User;
 import com.watook.security.WatookToken;
 import com.watook.service.UserService;
+import com.watook.utils.CommonConstants;
 
 @RestController
 @RequestMapping("/user")
@@ -31,15 +32,14 @@ public class UserController {
 	public Response save(@RequestBody User user) {
 		Response response = null;
 		try{
-			if(user == null)
-				return null;
 			
 			int userCreated = userService.save(user);
 			if (userCreated == 0) {
-				response = new Response("fail", null, "", "");
-			} else {				
-				String encryptKey = WatookToken.encrypt(user.getFbID(), environment.getRequiredProperty("ENCY_USER_KEY"));
-				response = new Response("success", 1, "", encryptKey);
+				response = new Response(CommonConstants.FAIL, null, CommonConstants.SYSTEM_ERROR);
+			} else {		
+				user.setUserID(String.valueOf(userCreated));
+				user.setEncryptKey(WatookToken.encrypt(user.getFbID(), environment.getRequiredProperty("ENCY_USER_KEY")));
+				response = new Response(CommonConstants.SUCCESS, user, null);
 			}
 		}catch(Exception e){
 			logger.info("Error : " + e);
