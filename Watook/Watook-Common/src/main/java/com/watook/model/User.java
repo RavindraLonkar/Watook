@@ -20,6 +20,9 @@ public class User {
 	@SerializedName("lastmodifiedby") private String lastModifiedBy;
 	@SerializedName("lastmodifieddate") private String lastModifiedDate;
 	@SerializedName("encryptkey") private String encryptKey;
+	@SerializedName("fbToken") private String fbToken;
+	@SerializedName("applicationId") private String applicationId;
+	
 	public String getUserID() {
 		return userID;
 	}
@@ -121,6 +124,18 @@ public class User {
 	}
 	public void setEncryptKey(String encryptKey) {
 		this.encryptKey = encryptKey;
+	}
+	public String getFbToken() {
+		return fbToken;
+	}
+	public void setFbToken(String fbToken) {
+		this.fbToken = fbToken;
+	}
+	public String getApplicationId() {
+		return applicationId;
+	}
+	public void setApplicationId(String applicationId) {
+		this.applicationId = applicationId;
 	}
 	
 }
