@@ -1,5 +1,7 @@
 package com.watook.controller;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -28,9 +30,28 @@ public class UserController {
 	private UserService userService;
 
 	private static final Logger logger = Logger.getLogger(UserController.class);
-
+	
+	
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public Response getUserList() {
+		Response response = null;
+								
+		try{
+						
+			List<User> userList = userService.getUserList();
+			if (userList.isEmpty()) {
+				response = new Response(CommonConstants.FAIL, null, CommonConstants.SYSTEM_ERROR);
+			} else {		
+				response = new Response(CommonConstants.SUCCESS, userList, null);
+			}
+		}catch(Exception e){
+			logger.info("Error : " + e);
+		}		
+		return response;
+	}
+	
 	// ------------------- save User ---------------------
-
+	
 	@RequestMapping(value = "/save", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Response save(@RequestBody User user) {
 		Response response = null;

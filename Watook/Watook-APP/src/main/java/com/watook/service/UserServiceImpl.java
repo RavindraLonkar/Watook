@@ -14,15 +14,15 @@ public class UserServiceImpl implements UserService{
 	
 	@Autowired
 	private UserDao userDao;
-	
-	@Override
-	public List<User> findAllUsers() {		
-		return userDao.findAllUsers();
-	}
 
 	@Override
 	public Integer save(User user) {
 		return userDao.save(user);
+	}
+
+	@Override
+	public List<User> getUserList() {
+		return userDao.getUserList();
 	}
 
 }

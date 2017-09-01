@@ -5,7 +5,8 @@ import java.util.List;
 import com.watook.model.User;
 
 public interface UserService {
-	List<User> findAllUsers();
 
 	Integer save(User user);
+
+	List<User> getUserList();
 }

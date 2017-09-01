@@ -20,19 +20,21 @@ public class UserDaoImpl implements UserDao {
 	@Autowired
 	DataSource dataSource;
 
-	private static final String SP_FIND_ALL_USERS = "SELECT jsoninsert('txn_user',?)";
+	private static final String SP_GET_USERLIST = "select * from txn_user";
 	private static final String SP_SAVE_USER = "SELECT jsoninsert('txn_user',?)";
 
 	@Override
-	public List<User> findAllUsers() {
+	public List<User> getUserList() {
 		JdbcTemplate jdbcTemplate = new JdbcTemplate();
 		jdbcTemplate.setDataSource(dataSource);
 
-		return jdbcTemplate.query(SP_FIND_ALL_USERS, new Object[] {}, new RowMapper<User>() {
+		return jdbcTemplate.query(SP_GET_USERLIST, new Object[] {}, new RowMapper<User>() {
 			@Override
 			public User mapRow(ResultSet rs, int rowNum) throws SQLException {
 				User user = new User();
-				//user.setName(rs.getString("name"));
+				user.setUserID(rs.getString("userId"));
+				user.setFirstName(rs.getString("firstName"));
+				user.setFirstName(rs.getString("firstName"));
 				return user;
 			}
 		});
