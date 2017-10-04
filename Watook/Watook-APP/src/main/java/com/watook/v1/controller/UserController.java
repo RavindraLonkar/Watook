@@ -1,4 +1,4 @@
-package com.watook.controller;
+package com.watook.v1.controller;
 
 import java.util.List;
 
@@ -16,9 +16,9 @@ import com.watook.model.FBAuthResponse;
 import com.watook.model.Response;
 import com.watook.model.User;
 import com.watook.security.WatookToken;
-import com.watook.service.UserService;
 import com.watook.utils.CommonConstants;
 import com.watook.utils.CommonUserMessages;
+import com.watook.v1.service.UserService;
 
 @RestController
 @RequestMapping("/user")

@@ -1,13 +1,13 @@
-package com.watook.service;
+package com.watook.v1.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.watook.dao.UserDao;
 import com.watook.model.User;
 import com.watook.security.WatookToken;
+import com.watook.v1.dao.UserDao;
 
 @Service
 public class UserServiceImpl implements UserService{

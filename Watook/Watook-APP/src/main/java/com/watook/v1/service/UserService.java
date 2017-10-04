@@ -1,4 +1,4 @@
-package com.watook.service;
+package com.watook.v1.service;
 
 import java.util.List;
 

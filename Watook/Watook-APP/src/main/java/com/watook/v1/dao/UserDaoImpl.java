@@ -1,4 +1,4 @@
-package com.watook.dao;
+package com.watook.v1.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
