@@ -30,8 +30,7 @@ public class UserController {
 	private UserService userService;
 
 	private static final Logger logger = Logger.getLogger(UserController.class);
-	
-	
+		
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public Response getUserList() {
 		Response response = null;
@@ -66,13 +65,12 @@ public class UserController {
 				
 		try{
 						
-			int userCreated = userService.save(user);
-			if (userCreated == 0) {
-				response = new Response(CommonConstants.FAIL, null, CommonConstants.SYSTEM_ERROR);
+		    User userCreated = userService.save(user);
+			if (userCreated.getUserID() == null) {
+				response = new Response(CommonConstants.FAIL, userCreated, CommonConstants.SYSTEM_ERROR);
 			} else {		
-				user.setUserID(String.valueOf(userCreated));
-				user.setEncryptKey(WatookToken.encrypt(user.getFbID(), environment.getRequiredProperty("ENCY_USER_KEY")));
-				response = new Response(CommonConstants.SUCCESS, user, null);
+				userCreated.setToken(WatookToken.encrypt(user.getFbID(), environment.getRequiredProperty("ENCY_USER_KEY")));
+				response = new Response(CommonConstants.SUCCESS, userCreated, CommonUserMessages.USER_SAVED);
 			}
 		}catch(Exception e){
 			logger.info("Error : " + e);
