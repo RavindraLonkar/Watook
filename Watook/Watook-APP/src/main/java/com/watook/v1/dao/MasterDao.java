@@ -6,5 +6,5 @@ import com.watook.model.CodeValue;
 
 public interface MasterDao {
 
-	List<CodeValue> getCodeValueList(Integer codetypeid);
+	List<CodeValue> getCodeValueList();
 }

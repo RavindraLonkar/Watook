@@ -19,17 +19,18 @@ public class MasterDaoImpl implements MasterDao {
 	@Autowired
 	DataSource dataSource;
 
-	private static final String SP_GET_USERLIST = "select * from cfg_codevalue where codetypeid=?";
+	private static final String SP_GET_CODEVLAUE_LIST = "select type.codetype,codevalue.* from cfg_codevalue codevalue inner join cfg_codetype type on codevalue.codetypeid=type.codetypeid";
 
 	@Override
-	public List<CodeValue> getCodeValueList(Integer codetypeid) {
+	public List<CodeValue> getCodeValueList() {
 		JdbcTemplate jdbcTemplate = new JdbcTemplate();
 		jdbcTemplate.setDataSource(dataSource);
 
-		return jdbcTemplate.query(SP_GET_USERLIST, new Object[] {codetypeid}, new RowMapper<CodeValue>() {
+		return jdbcTemplate.query(SP_GET_CODEVLAUE_LIST, new Object[] {}, new RowMapper<CodeValue>() {
 			@Override
 			public CodeValue mapRow(ResultSet rs, int rowNum) throws SQLException {
 				CodeValue codeValue = new CodeValue();
+				codeValue.setCodeType(rs.getString("CodeType"));
 				codeValue.setCodeValueID(rs.getString("CodeValueID"));
 				codeValue.setCodeTypeID(rs.getString("CodeTypeID"));
 				codeValue.setCodeValue(rs.getString("CodeValue"));

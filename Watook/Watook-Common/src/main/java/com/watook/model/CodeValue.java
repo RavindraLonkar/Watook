@@ -1,6 +1,7 @@
 package com.watook.model;
 
 public class CodeValue {
+	private String codeType;
 	private String codeValueID;
 	private String codeTypeID;
 	private String codeValue;
@@ -17,6 +18,15 @@ public class CodeValue {
 	private String createdDate;
 	private String lastModifiedBy;
 	private String lastModifiedDate;
+
+	
+	public String getCodeType() {
+		return codeType;
+	}
+
+	public void setCodeType(String codeType) {
+		this.codeType = codeType;
+	}
 
 	public String getCodeValueID() {
 		return codeValueID;

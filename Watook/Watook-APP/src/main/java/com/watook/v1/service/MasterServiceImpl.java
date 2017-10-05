@@ -15,8 +15,8 @@ public class MasterServiceImpl implements MasterService {
 	private MasterDao masterDao;
 
 	@Override
-	public List<CodeValue> getCodeValueList(Integer codetypeid) {
-		return masterDao.getCodeValueList(codetypeid);
+	public List<CodeValue> getCodeValueList() {
+		return masterDao.getCodeValueList();
 	}
 
 }
