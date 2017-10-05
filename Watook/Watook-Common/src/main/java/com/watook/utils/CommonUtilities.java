@@ -1,10 +1,18 @@
 package com.watook.utils;
 
-import java.util.Iterator;
-
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-
 public class CommonUtilities {
-	
+
+	public static Boolean ValidateIntegerData(String DataValue) {
+		Boolean checkFlag = true;
+		try {
+			if (DataValue.equals("")) {
+				checkFlag = false;
+			} else {
+				Integer.parseInt(DataValue);
+			}
+		} catch (Exception e) {
+			checkFlag = false;
+		}
+		return checkFlag;
+	}
 }

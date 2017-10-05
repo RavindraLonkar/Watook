@@ -35,6 +35,7 @@ create table Txn_User(
 UserID              serial not null,
 FbID                varchar(4000) not null,
 LastName      		varchar(510),
+MiddleName     		varchar(510),
 FirstName     		varchar(510),
 DOB                 timestamp,
 Age                 int,
@@ -42,15 +43,21 @@ GenderID            int,
 ContactMobile       varchar(25),
 ContactMobile2      varchar(25),
 EmailID             varchar(500),
-DeviceID            varchar(1020),
+AdvertiseId         varchar(1020),
+AboutYou            varchar(4000) null,
+WorkInfo            varchar(4000) null,
+StatusInfo			int not null,
+FbImages			text  null,
+ProfileImage		varchar(1000) null,
 IsActive            BIT not null,
 CreatedBy		    int,
 CreatedDate		    timestamp,
 LastModifiedBy		int,
 LastModifiedDate	timestamp,
 CONSTRAINT Txn_User_pkey PRIMARY KEY (UserID) ,
-unique (deviceId),
-FOREIGN KEY(GenderID) REFERENCES CFG_CodeValue 
+unique (AdvertiseId),
+FOREIGN KEY(GenderID) REFERENCES CFG_CodeValue, 
+FOREIGN KEY(StatusInfo) REFERENCES CFG_CodeValue
 )
 
 
@@ -92,28 +99,32 @@ FOREIGN KEY(userid) REFERENCES txn_user(userid)
 create table TXN_UserSetting(
 Id 	             serial not null,
 UserId 	         int not null,
-Rang 	         int NOT NULL,
-Age 	         int NOT NULL,
-FemaleInterest   bit not null,
-MaleInterest     bit not null,
+DistanceRange    float8 NOT NULL,
+DistanceIn       int NOT NULL,
+AgeMin 			 int NOT NULL,
+AgeMax 	         int NOT NULL,
+FemaleInterest   int not null,
+MaleInterest     int not null,
 createdDate      timestamp NOT NULL,
-LastModifiedDate	timestamp not null,
+LastModifiedDate timestamp not null,
 CONSTRAINT TXN_UserSetting_pkey PRIMARY KEY (Id),
-FOREIGN KEY(userid) REFERENCES txn_user(userid)
+FOREIGN KEY(userid) REFERENCES txn_user(userid),
+FOREIGN KEY(FemaleInterest) REFERENCES CFG_CodeValue, 
+FOREIGN KEY(MaleInterest) REFERENCES CFG_CodeValue 
 )
 
 create table TXN_UserRequest(
 Id 	               serial not null,
 RequestBy          int not null,
 RequestTo          int not null,    
-Status 	           int NOT NULL,
+ReqStatus 	           int NOT NULL,
 RejectAttemtCount  int NOT NULL,
 createdDate      timestamp NOT NULL,
 LastModifiedDate	timestamp not null,
 CONSTRAINT TXN_UserRequest_pkey PRIMARY KEY (Id),
 FOREIGN KEY(RequestBy) REFERENCES txn_user(userid),
 FOREIGN KEY(RequestTo) REFERENCES txn_user(userid),  
-FOREIGN KEY(Status) REFERENCES cfg_codevalue(CodeValueID)      
+FOREIGN KEY(ReqStatus) REFERENCES cfg_codevalue(CodeValueID)      
 )
 
 
