@@ -44,18 +44,24 @@ public class UserDaoImpl implements UserDao {
 
 		Gson gson = new GsonBuilder().setFieldNamingStrategy(FieldNamingPolicies.lowerCaseFields()).create();
 		String userJson = gson.toJson(user);
-
-		return jdbcTemplate.queryForObject(SP_SAVE_USER, new Object[] { userJson }, new RowMapper<User>() {
+		
+		String userid = jdbcTemplate.queryForObject(SP_SAVE_USER, new Object[] { userJson }, String.class);
+		
+		User newUser = new User();
+		newUser.setUserId(userid);
+		
+		return newUser;
+	/*	return jdbcTemplate.queryForObject(SP_SAVE_USER, new Object[] { userJson }, new RowMapper<User>() {
 			@Override
 			public User mapRow(ResultSet rs, int rowNum) throws SQLException {
 				User user = new User();
-				user.setUserID(rs.getString("userid"));
+				user.setUserId(rs.getString("userid"));
 				user.setFirstName(rs.getString("firstname"));
 				user.setLastName(rs.getString("lastname"));
-				user.setFbID(rs.getString("fbid"));
+				user.setFbId(rs.getString("fbid"));
 				return user;
 			}
-		});
+		});*/
 
 	}
 

@@ -66,10 +66,28 @@ public class UserController {
 		try{
 						
 		    User userCreated = userService.save(user);
-			if (userCreated.getUserID() == null) {
+			if (userCreated.getUserId() == null) {
 				response = new Response(CommonConstants.FAIL, userCreated, CommonConstants.SYSTEM_ERROR);
 			} else {		
-				userCreated.setToken(WatookToken.encrypt(user.getFbID(), environment.getRequiredProperty("ENCY_USER_KEY")));
+				userCreated.setToken(WatookToken.encrypt(user.getFbId(), environment.getRequiredProperty("ENCY_USER_KEY")));
+				response = new Response(CommonConstants.SUCCESS, userCreated, CommonUserMessages.USER_SAVED);
+			}
+		}catch(Exception e){
+			logger.info("Error : " + e);
+		}		
+		return response;
+	}
+	
+	@RequestMapping(value = "/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public Response update(@RequestBody User user) {
+		Response response = null;				
+		try{
+						
+		    User userCreated = userService.save(user);
+			if (userCreated.getUserId() == null) {
+				response = new Response(CommonConstants.FAIL, userCreated, CommonConstants.SYSTEM_ERROR);
+			} else {		
+				userCreated.setToken(WatookToken.encrypt(user.getFbId(), environment.getRequiredProperty("ENCY_USER_KEY")));
 				response = new Response(CommonConstants.SUCCESS, userCreated, CommonUserMessages.USER_SAVED);
 			}
 		}catch(Exception e){
