@@ -7,4 +7,6 @@ public class CommonConstants {
 	public static final String FAIL = "fail";
 	
 	public static final String RECORD_NOT_FOUND = "Record not Found.";
+
+	public static final String INVALID_TOKEN_ERROR = "Invalid Token";
 }
