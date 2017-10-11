@@ -23,9 +23,6 @@ public class User {
 	private String createdDate;
 	private String lastModifiedBy;
 	private String lastModifiedDate;
-	private String fbToken;
-	private String applicationId;
-	private String token;
 	
 	public String getUserId() {
 		return userId;
@@ -158,24 +155,6 @@ public class User {
 	}
 	public void setLastModifiedDate(String lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;
-	}
-	public String getFbToken() {
-		return fbToken;
-	}
-	public void setFbToken(String fbToken) {
-		this.fbToken = fbToken;
-	}
-	public String getApplicationId() {
-		return applicationId;
-	}
-	public void setApplicationId(String applicationId) {
-		this.applicationId = applicationId;
-	}
-	public String getToken() {
-		return token;
-	}
-	public void setToken(String token) {
-		this.token = token;
 	}
 	
 }

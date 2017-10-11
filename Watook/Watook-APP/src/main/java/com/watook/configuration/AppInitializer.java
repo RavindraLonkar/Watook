@@ -4,6 +4,8 @@ import javax.servlet.Filter;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
+import com.watook.filter.SecurityFilter;
+
 public class AppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
 	@Override
@@ -23,7 +25,7 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
 	
 	@Override
     protected Filter[] getServletFilters() {
-    	Filter [] singleton = { new CORSFilter() };
+    	Filter [] singleton = { new SecurityFilter() };
     	return singleton;
 	}
 }

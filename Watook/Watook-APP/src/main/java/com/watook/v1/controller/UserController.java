@@ -49,7 +49,7 @@ public class UserController {
 			if(fBAuthResponse.getId() == null || !fBAuthResponse.getId().equals(applicationId))
 				return new Response(CommonConstants.FAIL, null, CommonUserMessages.AUTH_FAIL);
 			
-			String token = WatookToken.encrypt(applicationId, environment.getRequiredProperty("ENCY_USER_KEY"));
+			String token = WatookToken.encrypt(applicationId+"|"+environment.getRequiredProperty("MATCH_USER_KEY"), environment.getRequiredProperty("ENCY_USER_KEY"));
 			
 			return new Response(CommonConstants.SUCCESS, token, CommonUserMessages.AUTH_SUCCESS);	
 			
