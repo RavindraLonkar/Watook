@@ -19,13 +19,13 @@ import org.springframework.stereotype.Component;
 
 import com.watook.security.WatookToken;
 
-@Component
+@Component("checkSession")
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class SecurityFilter implements Filter {
-
+	
 	@Autowired
-	private Environment environment;
-
+	Environment environment;
+	
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -35,17 +35,28 @@ public class SecurityFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 
-		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
+		res.setHeader("Access-Control-Allow-Origin", "*");
+		res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE");
+		res.setHeader("Access-Control-Max-Age", "3600");
+		res.setHeader("Access-Control-Allow-Headers", "X-requested-with, Content-Type");
+
+		HttpServletRequest req = (HttpServletRequest) request;
 		String url = req.getRequestURL().toString();
-		if (url.contains("build/session")) {
+		String decryKey = "";
+		if (url.contains("auth")||url.contains("/error")) {
 			chain.doFilter(request, response);
 		} else {
-			String decryKey = WatookToken.decrypt(req.getHeader("token"), environment.getProperty("ENCY_USER_KEY"));
-			if (decryKey != null && decryKey.contains(environment.getProperty("MATCH_USER_KEY"))) {
+			try {
+				decryKey = WatookToken.decrypt(req.getHeader("token"), "$uTh!!##");
+			} catch (Exception e) {
+				System.out.println("Invalid token");
+			}
+
+			if (decryKey != null && decryKey.contains("m$TcHr0LeUsER")) {
 				chain.doFilter(request, response);
 			} else {
-				res.sendRedirect(environment.getProperty("TOKEN_INVALID_REDIRECT_URL"));
+				res.sendRedirect("/Watook/api/error");
 			}
 		}
 	}
