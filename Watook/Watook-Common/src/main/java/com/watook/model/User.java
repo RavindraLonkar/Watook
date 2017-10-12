@@ -23,6 +23,7 @@ public class User {
 	private String createdDate;
 	private String lastModifiedBy;
 	private String lastModifiedDate;
+	private Location location;
 	
 	public String getUserId() {
 		return userId;
@@ -155,6 +156,12 @@ public class User {
 	}
 	public void setLastModifiedDate(String lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;
+	}
+	public Location getLocation() {
+		return location;
+	}
+	public void setLocation(Location location) {
+		this.location = location;
 	}
 	
 }
