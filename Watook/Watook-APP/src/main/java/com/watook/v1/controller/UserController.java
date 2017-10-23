@@ -70,7 +70,7 @@ public class UserController {
 				response = new Response(CommonConstants.SUCCESS, userList, null);
 			}
 		}catch(Exception e){
-			logger.info("Error : " + e);
+			response = new Response(CommonConstants.FAIL, null, CommonConstants.SYSTEM_ERROR);
 		}		
 		return response;
 	}
@@ -89,7 +89,7 @@ public class UserController {
 				response = new Response(CommonConstants.SUCCESS, userCreated, CommonUserMessages.USER_SAVED);
 			}
 		}catch(Exception e){
-			logger.info("Error : " + e);
+			response = new Response(CommonConstants.FAIL, null, CommonConstants.SYSTEM_ERROR);
 		}		
 		return response;
 	}
