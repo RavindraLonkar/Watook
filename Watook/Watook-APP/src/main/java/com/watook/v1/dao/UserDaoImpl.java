@@ -45,7 +45,9 @@ public class UserDaoImpl implements UserDao {
 		        user.setEmailId(rs.getString("emailid"));
 		        user.setAdvertiseId(rs.getString("advertiseid"));
 		        user.setAboutYou(rs.getString("aboutyou"));
-		        user.setWorkInfo(rs.getString("workinfo"));
+		        user.setWorkEmployer(rs.getString("workEmployer"));
+		        user.setWorkLocation(rs.getString("workLocation"));
+		        user.setWorkPosition(rs.getString("workPosition"));
 		        user.setStatusInfo(rs.getString("statusinfo"));
 		        user.setFbImages(rs.getString("fbimages"));
 		        user.setProfileImage(rs.getString("profileimage"));

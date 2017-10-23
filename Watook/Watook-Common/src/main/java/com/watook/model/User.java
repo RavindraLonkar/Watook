@@ -14,7 +14,9 @@ public class User {
 	private String emailId;
 	private String advertiseId;
 	private String aboutYou;
-	private String workInfo;
+	private String workEmployer;
+	private String workLocation;
+	private String workPosition;
 	private String statusInfo;
 	private String fbImages;
 	private String profileImage;
@@ -103,11 +105,23 @@ public class User {
 	public void setAboutYou(String aboutYou) {
 		this.aboutYou = aboutYou;
 	}
-	public String getWorkInfo() {
-		return workInfo;
+	public String getWorkEmployer() {
+		return workEmployer;
 	}
-	public void setWorkInfo(String workInfo) {
-		this.workInfo = workInfo;
+	public void setWorkEmployer(String workEmployer) {
+		this.workEmployer = workEmployer;
+	}
+	public String getWorkLocation() {
+		return workLocation;
+	}
+	public void setWorkLocation(String workLocation) {
+		this.workLocation = workLocation;
+	}
+	public String getWorkPosition() {
+		return workPosition;
+	}
+	public void setWorkPosition(String workPosition) {
+		this.workPosition = workPosition;
 	}
 	public String getStatusInfo() {
 		return statusInfo;
