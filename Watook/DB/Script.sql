@@ -115,3 +115,17 @@ insert into CFG_CodeValue(CodeValueID, CodeTypeId, CodeValue, CodeValueDescripti
 select 504,5,'Blocked','Blocked', 1,0,1,1,1,now(),1,now()
 where NOT EXISTS(select * from CFG_CodeValue where codeTypeId = 5 and CodeValueID=504)
 --------------------------------------------
+
+ALTER Table txn_user
+ADD Column workemployer varchar(255);
+
+ALTER Table txn_user
+ADD Column worklocation varchar(255);
+
+ALTER Table txn_user
+ADD Column workposition varchar(255);
+
+ALTER Table txn_user
+DROP column workinfo
+
+-----------------------------------------------------
