@@ -21,9 +21,6 @@ import com.watook.v1.service.SettingService;
 public class SettingController {
 	
 	@Autowired
-	private Environment environment;
-	
-	@Autowired
 	SettingService settingService;
 	
 	private static final Logger logger = Logger.getLogger(UserController.class);
@@ -37,9 +34,10 @@ public class SettingController {
 			if (savedSetting.getSettingId() == null) {
 				response = new Response(CommonConstants.FAIL, savedSetting, CommonConstants.SYSTEM_ERROR);
 			} else {		
-				response = new Response(CommonConstants.SUCCESS, savedSetting, CommonUserMessages.USER_SAVED);
+				response = new Response(CommonConstants.SUCCESS, savedSetting, CommonUserMessages.SETTING_SAVED);
 			}
 		}catch(Exception e){
+			logger.info("Error : " + e);
 			response = new Response(CommonConstants.FAIL, null, CommonConstants.SYSTEM_ERROR);
 		}		
 		return response;
@@ -55,7 +53,7 @@ public class SettingController {
 			if (savedSetting.getSettingId() == null) {
 				response = new Response(CommonConstants.FAIL, savedSetting, CommonConstants.SYSTEM_ERROR);
 			} else {		
-				response = new Response(CommonConstants.SUCCESS, savedSetting, CommonUserMessages.USER_SAVED);
+				response = new Response(CommonConstants.SUCCESS, savedSetting, null);
 			}
 		}catch(Exception e){
 			logger.info("Error : " + e);

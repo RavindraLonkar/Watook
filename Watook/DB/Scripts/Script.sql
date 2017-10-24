@@ -129,3 +129,7 @@ ALTER Table txn_user
 DROP column workinfo
 
 -----------------------------------------------------
+-- change name of the setting table id
+ALTER TABLE txn_usersetting RENAME COLUMN id TO settingId
+
+----------------------------------------------------

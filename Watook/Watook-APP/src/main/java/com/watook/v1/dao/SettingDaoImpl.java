@@ -5,13 +5,11 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapperResultSetExtractor;
 import org.springframework.stereotype.Repository;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.watook.model.Setting;
-import com.watook.model.User;
 import com.watook.utils.CommonProcedures;
 import com.watook.utils.CommonQueries;
 import com.watook.utils.FieldNamingPolicies;
@@ -34,7 +32,7 @@ public class SettingDaoImpl implements SettingDao {
 		String settingId = jdbcTemplate.queryForObject(CommonProcedures.SP_SAVE_USERSETTING, new Object[] { settingJson }, String.class);
 		
 		Setting savedSetting = new Setting();
-		setting.setUserId(settingId);
+		savedSetting.setSettingId(settingId);
 		
 		return savedSetting;
 	}

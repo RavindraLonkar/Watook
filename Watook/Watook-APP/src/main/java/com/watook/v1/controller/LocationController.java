@@ -45,7 +45,7 @@ public class LocationController {
 			if (locationData.getLocId() == null) {
 				response = new Response(CommonConstants.FAIL, locationData, CommonConstants.SYSTEM_ERROR);
 			} else {
-				response = new Response(CommonConstants.SUCCESS, locationData, CommonUserMessages.Location_SAVED);
+				response = new Response(CommonConstants.SUCCESS, locationData, CommonUserMessages.LOCATION_SAVED);
 			}
 		} catch (Exception e) {
 			logger.info("Error : " + e);

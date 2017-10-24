@@ -1,7 +1,6 @@
 package com.watook.model;
 
 public class Setting {
-	private String id;
 	private String settingId;
 	private String userId;
 	private String distanceRange;
@@ -13,12 +12,6 @@ public class Setting {
 	private String createdDate;
 	private String lastModifiedDate;
 	
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
 	public String getSettingId() {
 		return settingId;
 	}
