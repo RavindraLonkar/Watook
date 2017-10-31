@@ -25,6 +25,7 @@ public class User {
 	private String createdDate;
 	private String lastModifiedBy;
 	private String lastModifiedDate;
+	private String fireBaseToken;
 	private Location location;
 	
 	public String getUserId() {
@@ -176,6 +177,12 @@ public class User {
 	}
 	public void setLocation(Location location) {
 		this.location = location;
+	}
+	public String getFireBaseToken() {
+		return fireBaseToken;
+	}
+	public void setFireBaseToken(String fireBaseToken) {
+		this.fireBaseToken = fireBaseToken;
 	}
 	
 }

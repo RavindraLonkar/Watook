@@ -13,9 +13,9 @@ $BODY$
 	
     
       INSERT INTO txn_user(fbid,firstname,middlename,lastname,dob,genderid,contactmobile,contactmobile2,emailid,advertiseid,aboutyou,workemployer,worklocation,workposition,statusinfo,fbimages,
-      profileimage,isactive,createdby,createddate,lastmodifiedby,lastmodifieddate)
+      profileimage,isactive,firebasetoken,createdby,createddate,lastmodifiedby,lastmodifieddate)
       SELECT fbid,firstname,middlename,lastname,dob,genderid,contactmobile,contactmobile2,emailid,advertiseid,aboutyou,workemployer,worklocation,workposition,statusinfo,fbimages,
-      profileimage,1,1,now(),1,now() FROM json_populate_record(null::txn_user, userjson::json)
+      profileimage,1,firebasetoken,1,now(),1,now() FROM json_populate_record(null::txn_user, userjson::json)
       WHERE NOT EXISTS (select 1 from txn_user where fbid = (select userJson::json->>'fbid') limit 1)
       RETURNING userid into result;
 
@@ -38,7 +38,8 @@ $BODY$
              ,workposition = (select userJson::json->>'workposition')
              ,statusinfo = (select cast(userJson::json->>'statusinfo' as int))
              ,fbimages = (select userJson::json->>'fbimages')
-             ,profileimage = (select userJson::json->>'profileimage')  
+             ,profileimage = (select userJson::json->>'profileimage')
+             ,firebasetoken = (select userJson::json->>'firebasetoken')
              ,lastmodifieddate = now() 
              WHERE fbid = (select userJson::json->>'fbid')
              RETURNING userid into result;
@@ -49,7 +50,6 @@ $BODY$
  $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100;
-ALTER FUNCTION public.saveuser(text)
-  OWNER TO postgres;
+
 
 

@@ -133,3 +133,8 @@ DROP column workinfo
 ALTER TABLE txn_usersetting RENAME COLUMN id TO settingId
 
 ----------------------------------------------------
+
+alter table txn_user 
+add column fireBaseToken text
+
+--------------------------------------------------
