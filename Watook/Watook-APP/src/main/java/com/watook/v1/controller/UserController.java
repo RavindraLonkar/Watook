@@ -17,6 +17,7 @@ import org.springframework.web.client.RestTemplate;
 import com.watook.model.FBAuthResponse;
 import com.watook.model.Response;
 import com.watook.model.User;
+import com.watook.model.UserNearBy;
 import com.watook.security.WatookToken;
 import com.watook.utils.CommonConstants;
 import com.watook.utils.CommonUserMessages;
@@ -106,6 +107,23 @@ public class UserController {
 			logger.info(e);
 		}
 		return fBAuthResponse;
+	}
+	
+	@RequestMapping(value = "/nearbylist", method = RequestMethod.GET)
+	public Response getUserNearByList(HttpServletRequest request) {
+		Response response = null;
+		String userId = request.getParameter("userId");					
+		try{						
+			List<UserNearBy> userList = userService.getUserNearByList(Integer.parseInt(userId));
+			if (userList.isEmpty()) {
+				response = new Response(CommonConstants.FAIL, null, CommonConstants.SYSTEM_ERROR);
+			} else {		
+				response = new Response(CommonConstants.SUCCESS, userList, null);
+			}
+		}catch(Exception e){
+			response = new Response(CommonConstants.FAIL, null, CommonConstants.SYSTEM_ERROR);
+		}		
+		return response;
 	}
 }
 
