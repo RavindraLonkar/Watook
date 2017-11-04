@@ -114,7 +114,7 @@ public class UserController {
 		Response response = null;
 		String userId = request.getParameter("userId");					
 		try{						
-			List<UserNearBy> userList = userService.getUserNearByList(Integer.parseInt(userId));
+			List<UserNearBy> userList = userService.getUserNearByList(userId);
 			if (userList.isEmpty()) {
 				response = new Response(CommonConstants.FAIL, null, CommonConstants.SYSTEM_ERROR);
 			} else {		

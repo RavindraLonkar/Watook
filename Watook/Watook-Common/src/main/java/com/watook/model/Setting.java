@@ -11,6 +11,8 @@ public class Setting {
 	private String maleInterest;
 	private String createdDate;
 	private String lastModifiedDate;
+	private String longitude;
+	private String latitude;
 	
 	public String getSettingId() {
 		return settingId;
@@ -72,5 +74,18 @@ public class Setting {
 	public void setLastModifiedDate(String lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;
 	}
+	public String getLongitude() {
+		return longitude;
+	}
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+	public String getLatitude() {
+		return latitude;
+	}
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+	
 	
 }

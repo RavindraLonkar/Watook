@@ -10,5 +10,5 @@ public interface UserService {
 	User save(User user);
 
 	List<User> getUserList();
-	List<UserNearBy> getUserNearByList(int userId);
+	List<UserNearBy> getUserNearByList(String userId);
 }

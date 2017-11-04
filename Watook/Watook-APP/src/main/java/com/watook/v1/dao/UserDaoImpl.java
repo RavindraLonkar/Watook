@@ -7,13 +7,17 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.watook.model.Location;
+import com.watook.model.Setting;
 import com.watook.model.User;
 import com.watook.model.UserNearBy;
 import com.watook.utils.CommonProcedures;
@@ -95,17 +99,39 @@ public class UserDaoImpl implements UserDao {
 
 	}
 
-	/*@Override
-	public UserNearBy getUserData(int userId) {
+	@Override
+	public Setting getUserData(String userId) {
 		
-		JdbcTemplate jdbcTemplate = new JdbcTemplate();
+		/*JdbcTemplate jdbcTemplate = new JdbcTemplate();
 		jdbcTemplate.setDataSource(dataSource);
 
-		return jdbcTemplate.queryForObject(CommonQueries.SP_GET_USERSETTING, new Object[] { Integer.parseInt(userId) }, new BeanPropertyRowMapper<Setting>(Setting.class));
-	}*/
+		return (Setting) jdbcTemplate.queryForObject(CommonQueries.SP_GET_USERSETTING, new Object[] {Integer.parseInt(userId)}, new BeanPropertyRowMapper<Setting>(Setting.class));
+	*/
+		
+		MapSqlParameterSource parameters = new MapSqlParameterSource();
+		parameters.addValue("id", Integer.parseInt(userId));
+		BeanPropertyRowMapper<Setting> rowMapper = BeanPropertyRowMapper.newInstance(Setting.class);
+		NamedParameterJdbcTemplate namedJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+		//JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		//namedJdbcTemplate.setFetchSize(FETCH_SIZE);
+		Setting list = namedJdbcTemplate.queryForObject(CommonQueries.SP_GET_USERSETTING, parameters, rowMapper);
+		return list;
+	}
+	
+	
 	
 	@Override
-	public List<UserNearBy> getUserNearByList() {
+	public List<UserNearBy> getUserNearByList(String userId) {
+		MapSqlParameterSource parameters = new MapSqlParameterSource();
+		parameters.addValue("id", Integer.parseInt(userId));
+		BeanPropertyRowMapper<UserNearBy> rowMapper = BeanPropertyRowMapper.newInstance(UserNearBy.class);
+		NamedParameterJdbcTemplate namedJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+		//JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		//namedJdbcTemplate.setFetchSize(FETCH_SIZE);
+		List<UserNearBy> list = namedJdbcTemplate.query(CommonQueries.SP_GET_USERLIST, parameters, rowMapper);
+		return list;
+		
+		/*
 		JdbcTemplate jdbcTemplate = new JdbcTemplate();
 		jdbcTemplate.setDataSource(dataSource);
 		
@@ -141,6 +167,6 @@ public class UserDaoImpl implements UserDao {
 		    }
 		});
 		
-	}
+	*/}
 
 }
