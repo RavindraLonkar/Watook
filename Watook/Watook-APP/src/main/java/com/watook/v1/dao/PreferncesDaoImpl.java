@@ -9,19 +9,19 @@ import org.springframework.stereotype.Repository;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.watook.model.Setting;
+import com.watook.model.Prefernces;
 import com.watook.utils.CommonProcedures;
 import com.watook.utils.CommonQueries;
 import com.watook.utils.FieldNamingPolicies;
 
 @Repository
-public class SettingDaoImpl implements SettingDao {
+public class PreferncesDaoImpl implements PreferncesDao {
 	
 	@Autowired
 	DataSource dataSource;
 
 	@Override
-	public Setting save(Setting setting) {
+	public Prefernces save(Prefernces setting) {
 		
 		JdbcTemplate jdbcTemplate = new JdbcTemplate();
 		jdbcTemplate.setDataSource(dataSource);
@@ -31,19 +31,19 @@ public class SettingDaoImpl implements SettingDao {
 		
 		String settingId = jdbcTemplate.queryForObject(CommonProcedures.SP_SAVE_USERSETTING, new Object[] { settingJson }, String.class);
 		
-		Setting savedSetting = new Setting();
+		Prefernces savedSetting = new Prefernces();
 		savedSetting.setSettingId(settingId);
 		
 		return savedSetting;
 	}
 
 	@Override
-	public Setting get(String userId) {
+	public Prefernces get(String userId) {
 		
 		JdbcTemplate jdbcTemplate = new JdbcTemplate();
 		jdbcTemplate.setDataSource(dataSource);
 
-		return jdbcTemplate.queryForObject(CommonQueries.SP_GET_USERSETTING, new Object[] { Integer.parseInt(userId) }, new BeanPropertyRowMapper<Setting>(Setting.class));
+		return jdbcTemplate.queryForObject(CommonQueries.SP_GET_USERSETTING, new Object[] { Integer.parseInt(userId) }, new BeanPropertyRowMapper<Prefernces>(Prefernces.class));
 	}
 
 }

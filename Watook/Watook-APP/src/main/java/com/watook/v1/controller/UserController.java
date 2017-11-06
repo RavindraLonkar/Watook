@@ -33,74 +33,75 @@ public class UserController {
 	private UserService userService;
 
 	private static final Logger logger = Logger.getLogger(UserController.class);
-		
+
 	@RequestMapping(value = "/auth", method = RequestMethod.GET)
 	public Response getUserAuth(HttpServletRequest request) {
-		
-		try{
+
+		try {
 			String applicationId = request.getParameter("applicationId");
 			String fbToken = request.getParameter("fbToken");
-			
-			if(fbToken == null || fbToken.equals(""))
+
+			if (fbToken == null || fbToken.equals(""))
 				return new Response(CommonConstants.FAIL, null, CommonUserMessages.AUTH_FAIL);
-			
+
 			FBAuthResponse fBAuthResponse = fbAuthentication(fbToken);
-			
-			if(fBAuthResponse.getId() == null || !fBAuthResponse.getId().equals(applicationId))
+
+			if (fBAuthResponse.getId() == null || !fBAuthResponse.getId().equals(applicationId))
 				return new Response(CommonConstants.FAIL, null, CommonUserMessages.AUTH_FAIL);
-			
-			String token = WatookToken.encrypt(applicationId+"|"+environment.getRequiredProperty("MATCH_USER_KEY"), environment.getRequiredProperty("ENCY_USER_KEY"));
-			
-			return new Response(CommonConstants.SUCCESS, token, CommonUserMessages.AUTH_SUCCESS);	
-			
-		}catch(Exception e){
+
+			String token = WatookToken.encrypt(applicationId + "|" + environment.getRequiredProperty("MATCH_USER_KEY"),
+					environment.getRequiredProperty("ENCY_USER_KEY"));
+
+			return new Response(CommonConstants.SUCCESS, token, CommonUserMessages.AUTH_SUCCESS);
+
+		} catch (Exception e) {
 			return new Response(CommonConstants.FAIL, null, CommonUserMessages.AUTH_FAIL);
 		}
-		
+
 	}
-	
+
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public Response getUserList() {
 		Response response = null;
-								
-		try{						
+
+		try {
 			List<User> userList = userService.getUserList();
 			if (userList.isEmpty()) {
 				response = new Response(CommonConstants.FAIL, null, CommonConstants.SYSTEM_ERROR);
-			} else {		
+			} else {
 				response = new Response(CommonConstants.SUCCESS, userList, null);
 			}
-		}catch(Exception e){
+		} catch (Exception e) {
 			response = new Response(CommonConstants.FAIL, null, CommonConstants.SYSTEM_ERROR);
-		}		
+		}
 		return response;
 	}
-	
+
 	// ------------------- save User ---------------------
-	
+
 	@RequestMapping(value = "/save", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Response save(@RequestBody User user) {
 		Response response = null;
-		try{
-						
-		    User userCreated = userService.save(user);
+		try {
+
+			User userCreated = userService.save(user);
 			if (userCreated.getUserId() == null) {
 				response = new Response(CommonConstants.FAIL, userCreated, CommonConstants.SYSTEM_ERROR);
-			} else {		
+			} else {
 				response = new Response(CommonConstants.SUCCESS, userCreated, CommonUserMessages.USER_SAVED);
 			}
-		}catch(Exception e){
+		} catch (Exception e) {
 			response = new Response(CommonConstants.FAIL, null, CommonConstants.SYSTEM_ERROR);
-		}		
+		}
 		return response;
 	}
-		
-	private FBAuthResponse fbAuthentication(String fbToken){
+
+	private FBAuthResponse fbAuthentication(String fbToken) {
 		FBAuthResponse fBAuthResponse = null;
 		try {
-						
+
 			RestTemplate restTemplate = new RestTemplate();
-			String fbAuthUrl = "https://graph.facebook.com/app/?access_token=" + fbToken;			
+			String fbAuthUrl = "https://graph.facebook.com/app/?access_token=" + fbToken;
 			fBAuthResponse = restTemplate.getForObject(fbAuthUrl, FBAuthResponse.class);
 			fBAuthResponse.setIsAuthSuccess(true);
 		} catch (Exception e) {
@@ -108,22 +109,39 @@ public class UserController {
 		}
 		return fBAuthResponse;
 	}
-	
+
 	@RequestMapping(value = "/nearbylist", method = RequestMethod.GET)
 	public Response getUserNearByList(HttpServletRequest request) {
 		Response response = null;
-		String userId = request.getParameter("userId");					
-		try{						
+		String userId = request.getParameter("userId");
+		try {
 			List<UserNearBy> userList = userService.getUserNearByList(userId);
 			if (userList.isEmpty()) {
 				response = new Response(CommonConstants.FAIL, null, CommonConstants.SYSTEM_ERROR);
-			} else {		
+			} else {
 				response = new Response(CommonConstants.SUCCESS, userList, null);
 			}
-		}catch(Exception e){
+		} catch (Exception e) {
 			response = new Response(CommonConstants.FAIL, null, CommonConstants.SYSTEM_ERROR);
-		}		
+		}
+		return response;
+	}
+
+	// get user data
+	@RequestMapping(value = "/get", method = RequestMethod.GET)
+	public Response getUser(HttpServletRequest request) {
+		Response response = null;
+		String userId = request.getParameter("userId");
+		try {
+			User user = userService.getUser(userId);
+			if (user == null) {
+				response = new Response(CommonConstants.FAIL, null, CommonConstants.SYSTEM_ERROR);
+			} else {
+				response = new Response(CommonConstants.SUCCESS, user, null);
+			}
+		} catch (Exception e) {
+			response = new Response(CommonConstants.FAIL, null, CommonConstants.SYSTEM_ERROR);
+		}
 		return response;
 	}
 }
-

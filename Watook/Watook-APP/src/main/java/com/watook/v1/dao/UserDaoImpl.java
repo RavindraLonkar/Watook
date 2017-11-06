@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.watook.model.Location;
-import com.watook.model.Setting;
+import com.watook.model.Prefernces;
 import com.watook.model.User;
 import com.watook.model.UserNearBy;
 import com.watook.utils.CommonProcedures;
@@ -34,41 +34,45 @@ public class UserDaoImpl implements UserDao {
 	public List<User> getUserList() {
 		JdbcTemplate jdbcTemplate = new JdbcTemplate();
 		jdbcTemplate.setDataSource(dataSource);
-		
+
 		return jdbcTemplate.query(CommonQueries.SP_GET_USERLIST, new RowMapper<User>() {
-		    @Override
-		    public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-		        User user = new User();
-		        user.setUserId(rs.getString("userid"));
-		        user.setFbId(rs.getString("fbid"));
-		        user.setLastName(rs.getString("lastname"));
-		        user.setMiddleName(rs.getString("middlename"));
-		        user.setFirstName(rs.getString("firstname"));
-		        user.setGenderId(rs.getString("genderid"));
-		        user.setContactMobile(rs.getString("contactmobile"));
-		        user.setContactMobile2(rs.getString("contactmobile2"));
-		        user.setEmailId(rs.getString("emailid"));
-		        user.setAdvertiseId(rs.getString("advertiseid"));
-		        user.setAboutYou(rs.getString("aboutyou"));
-		        user.setWorkEmployer(rs.getString("workemployer"));
-		        user.setWorkLocation(rs.getString("worklocation"));
-		        user.setWorkPosition(rs.getString("workposition"));
-		        user.setStatusInfo(rs.getString("statusinfo"));
-		        user.setFbImages(rs.getString("fbimages"));
-		        user.setProfileImage(rs.getString("profileimage"));
-		        user.setFireBaseToken(rs.getString("firebasetoken"));
-		        Location location = new Location();
-		        location.setLatitude(rs.getString("latitude"));
-		        location.setLongitude(rs.getString("longitude"));
+			@Override
+			public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+				User user = new User();
+				user.setUserId(rs.getString("userid"));
+				user.setFbId(rs.getString("fbid"));
+				user.setLastName(rs.getString("lastname"));
+				user.setMiddleName(rs.getString("middlename"));
+				user.setFirstName(rs.getString("firstname"));
+				user.setGenderId(rs.getString("genderid"));
+				user.setContactMobile(rs.getString("contactmobile"));
+				user.setContactMobile2(rs.getString("contactmobile2"));
+				user.setEmailId(rs.getString("emailid"));
+				user.setAdvertiseId(rs.getString("advertiseid"));
+				user.setAboutYou(rs.getString("aboutyou"));
+				user.setWorkEmployer(rs.getString("workemployer"));
+				user.setWorkLocation(rs.getString("worklocation"));
+				user.setWorkPosition(rs.getString("workposition"));
+				user.setStatusInfo(rs.getString("statusinfo"));
+				user.setFbImages(rs.getString("fbimages"));
+				user.setProfileImage(rs.getString("profileimage"));
+				user.setFireBaseToken(rs.getString("firebasetoken"));
+				Location location = new Location();
+				location.setLatitude(rs.getString("latitude"));
+				location.setLongitude(rs.getString("longitude"));
 
-		        user.setLocation(location);
+				user.setLocation(location);
 
-		        return user;
-		    }
+				return user;
+			}
 		});
-		
-		/*return jdbcTemplate.query(SP_GET_USERLIST, new Object[] {},
-				new RowMapperResultSetExtractor<User>(new BeanPropertyRowMapper<User>(User.class)));*/
+	}
+
+	@Override
+	public Prefernces getUserData(String userId) {
+		BeanPropertyRowMapper<Prefernces> rowMapper = BeanPropertyRowMapper.newInstance(Prefernces.class);
+		Prefernces list = (Prefernces) getData(userId, rowMapper, CommonQueries.SP_GET_USERSETTING);
+		return list;
 	}
 
 	@Override
@@ -78,95 +82,68 @@ public class UserDaoImpl implements UserDao {
 
 		Gson gson = new GsonBuilder().setFieldNamingStrategy(FieldNamingPolicies.lowerCaseFields()).create();
 		String userJson = gson.toJson(user);
-		
-		String userid = jdbcTemplate.queryForObject(CommonProcedures.SP_SAVE_USER, new Object[] { userJson }, String.class);
-		
+
+		String userid = jdbcTemplate.queryForObject(CommonProcedures.SP_SAVE_USER, new Object[] { userJson },
+				String.class);
+
 		User newUser = new User();
 		newUser.setUserId(userid);
-		
+
 		return newUser;
-	/*	return jdbcTemplate.queryForObject(SP_SAVE_USER, new Object[] { userJson }, new RowMapper<User>() {
-			@Override
-			public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-				User user = new User();
-				user.setUserId(rs.getString("userid"));
-				user.setFirstName(rs.getString("firstname"));
-				user.setLastName(rs.getString("lastname"));
-				user.setFbId(rs.getString("fbid"));
-				return user;
-			}
-		});*/
-
 	}
 
-	@Override
-	public Setting getUserData(String userId) {
-		
-		/*JdbcTemplate jdbcTemplate = new JdbcTemplate();
-		jdbcTemplate.setDataSource(dataSource);
-
-		return (Setting) jdbcTemplate.queryForObject(CommonQueries.SP_GET_USERSETTING, new Object[] {Integer.parseInt(userId)}, new BeanPropertyRowMapper<Setting>(Setting.class));
-	*/
-		
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public Object getData(String parameter, BeanPropertyRowMapper rowMapper, String query) {
 		MapSqlParameterSource parameters = new MapSqlParameterSource();
-		parameters.addValue("id", Integer.parseInt(userId));
-		BeanPropertyRowMapper<Setting> rowMapper = BeanPropertyRowMapper.newInstance(Setting.class);
+		parameters.addValue("id", Integer.parseInt(parameter));
 		NamedParameterJdbcTemplate namedJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-		//JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-		//namedJdbcTemplate.setFetchSize(FETCH_SIZE);
-		Setting list = namedJdbcTemplate.queryForObject(CommonQueries.SP_GET_USERSETTING, parameters, rowMapper);
-		return list;
+		return namedJdbcTemplate.queryForObject(query, parameters, rowMapper);
 	}
-	
-	
-	
+
 	@Override
 	public List<UserNearBy> getUserNearByList(String userId) {
 		MapSqlParameterSource parameters = new MapSqlParameterSource();
 		parameters.addValue("id", Integer.parseInt(userId));
 		BeanPropertyRowMapper<UserNearBy> rowMapper = BeanPropertyRowMapper.newInstance(UserNearBy.class);
 		NamedParameterJdbcTemplate namedJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-		//JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-		//namedJdbcTemplate.setFetchSize(FETCH_SIZE);
-		List<UserNearBy> list = namedJdbcTemplate.query(CommonQueries.SP_GET_USERLIST, parameters, rowMapper);
+		List<UserNearBy> list = namedJdbcTemplate.query(CommonQueries.SP_GET_USERLIST_NEARBY, parameters, rowMapper);
 		return list;
-		
-		/*
-		JdbcTemplate jdbcTemplate = new JdbcTemplate();
-		jdbcTemplate.setDataSource(dataSource);
-		
-		return jdbcTemplate.query(CommonQueries.SP_GET_USERLIST, new RowMapper<UserNearBy>() {
-		    @Override
-		    public UserNearBy mapRow(ResultSet rs, int rowNum) throws SQLException {
-		    	UserNearBy user = new UserNearBy();
-		        user.setUserId(rs.getString("userid"));
-		        user.setFbId(rs.getString("fbid"));
-		        user.setLastName(rs.getString("lastname"));
-		        user.setMiddleName(rs.getString("middlename"));
-		        user.setFirstName(rs.getString("firstname"));
-		        user.setGenderId(rs.getString("genderid"));
-		        user.setContactMobile(rs.getString("contactmobile"));
-		        user.setContactMobile2(rs.getString("contactmobile2"));
-		        user.setEmailId(rs.getString("emailid"));
-		        user.setAdvertiseId(rs.getString("advertiseid"));
-		        user.setAboutYou(rs.getString("aboutyou"));
-		        user.setWorkEmployer(rs.getString("workemployer"));
-		        user.setWorkLocation(rs.getString("worklocation"));
-		        user.setWorkPosition(rs.getString("workposition"));
-		        user.setStatusInfo(rs.getString("statusinfo"));
-		        user.setFbImages(rs.getString("fbimages"));
-		        user.setProfileImage(rs.getString("profileimage"));
-		       
-		        Location location = new Location();
-		        location.setLatitude(rs.getString("latitude"));
-		        location.setLongitude(rs.getString("longitude"));
+	}
 
-		        user.setLocation(location);
-
-		        return user;
-		    }
+	@Override
+	public User getUser(String userId) {
+		MapSqlParameterSource parameters = new MapSqlParameterSource();
+		parameters.addValue("id", Integer.parseInt(userId));
+		NamedParameterJdbcTemplate namedJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+		User list = namedJdbcTemplate.queryForObject(CommonQueries.SP_GET_USER, parameters, new RowMapper<User>() {
+			@Override
+			public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+				User user = new User();
+				user.setUserId(rs.getString("userid"));
+				user.setLastName(rs.getString("lastname"));
+				user.setMiddleName(rs.getString("middlename"));
+				user.setFirstName(rs.getString("firstname"));
+				user.setGenderId(rs.getString("genderid"));
+				user.setContactMobile(rs.getString("contactmobile"));
+				user.setContactMobile2(rs.getString("contactmobile2"));
+				user.setEmailId(rs.getString("emailid"));
+				user.setAboutYou(rs.getString("aboutyou"));
+				user.setWorkEmployer(rs.getString("workemployer"));
+				user.setWorkLocation(rs.getString("worklocation"));
+				user.setWorkPosition(rs.getString("workposition"));
+				user.setStatusInfo(rs.getString("statusinfo"));
+				user.setFbImages(rs.getString("fbimages"));
+				user.setProfileImage(rs.getString("profileimage"));
+				user.setFireBaseToken(rs.getString("firebasetoken"));
+				Location location = new Location();
+				location.setLatitude(rs.getString("latitude"));
+				location.setLongitude(rs.getString("longitude"));
+				user.setLocation(location);
+				return user;
+			}
 		});
-		
-	*/}
+
+		return list;
+	}
 
 }

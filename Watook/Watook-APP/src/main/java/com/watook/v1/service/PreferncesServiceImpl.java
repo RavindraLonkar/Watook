@@ -3,22 +3,22 @@ package com.watook.v1.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.watook.model.Setting;
-import com.watook.v1.dao.SettingDao;
+import com.watook.model.Prefernces;
+import com.watook.v1.dao.PreferncesDao;
 
 @Service
-public class SettingServiceImpl implements SettingService{
+public class PreferncesServiceImpl implements PreferncesService{
 	
 	@Autowired
-	private SettingDao settingDao;
+	private PreferncesDao settingDao;
 	
 	@Override
-	public Setting save(Setting setting) {
+	public Prefernces save(Prefernces setting) {
 		return settingDao.save(setting);
 	}
 
 	@Override
-	public Setting get(String userId) {
+	public Prefernces get(String userId) {
 		return settingDao.get(userId);
 	}
 	

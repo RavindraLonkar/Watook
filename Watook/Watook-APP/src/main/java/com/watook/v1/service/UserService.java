@@ -10,5 +10,8 @@ public interface UserService {
 	User save(User user);
 
 	List<User> getUserList();
+
 	List<UserNearBy> getUserNearByList(String userId);
+
+	User getUser(String userId);
 }

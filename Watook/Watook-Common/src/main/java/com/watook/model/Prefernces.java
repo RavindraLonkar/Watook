@@ -1,6 +1,6 @@
 package com.watook.model;
 
-public class Setting {
+public class Prefernces {
 	private String settingId;
 	private String userId;
 	private String distanceRange;
