@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.watook.model.Response;
 import com.watook.model.Prefernces;
+import com.watook.model.Response;
 import com.watook.utils.CommonConstants;
 import com.watook.utils.CommonUserMessages;
 import com.watook.v1.service.PreferncesService;
