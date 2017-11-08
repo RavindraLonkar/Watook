@@ -114,7 +114,33 @@ where NOT EXISTS(select * from CFG_CodeValue where codeTypeId = 5 and CodeValueI
 insert into CFG_CodeValue(CodeValueID, CodeTypeId, CodeValue, CodeValueDescription, DisplaySeqNo, IsDefault, IsDisplay, IsActive, CreatedBy, CreatedDate, LastModifiedBy, LastModifiedDate)
 select 504,5,'Blocked','Blocked', 1,0,1,1,1,now(),1,now()
 where NOT EXISTS(select * from CFG_CodeValue where codeTypeId = 5 and CodeValueID=504)
+
+----------------------------------------------------
+
+
+-- Distance In 
+insert into cfg_codeType (CodeTypeID,CodeType,CodeTypeDescription,CreatedBy,CreatedDate,LastModifiedBy,LastModifiedDate) 
+select 6,'Distance In','Distance In',1,now(),1,now()
+where NOT EXISTS(select * from cfg_codeType where codeTypeId = 6)
+
+--Distance in KM
+insert into CFG_CodeValue(CodeValueID, CodeTypeId, CodeValue, CodeValueDescription, DisplaySeqNo, IsDefault, IsDisplay, IsActive, CreatedBy, CreatedDate, LastModifiedBy, LastModifiedDate)
+select 601,6,'KM','KM', 1,0,1,1,1,now(),1,now()
+where NOT EXISTS(select * from CFG_CodeValue where codeTypeId = 6 and CodeValueID=601)
+
+-- Distance in miles
+insert into CFG_CodeValue(CodeValueID, CodeTypeId, CodeValue, CodeValueDescription, DisplaySeqNo, IsDefault, IsDisplay, IsActive, CreatedBy, CreatedDate, LastModifiedBy, LastModifiedDate)
+select 602,6,'Miles','Miles', 1,0,1,1,1,now(),1,now()
+where NOT EXISTS(select * from CFG_CodeValue where codeTypeId = 6 and CodeValueID=602)
+
+-- Distance in meter
+insert into CFG_CodeValue(CodeValueID, CodeTypeId, CodeValue, CodeValueDescription, DisplaySeqNo, IsDefault, IsDisplay, IsActive, CreatedBy, CreatedDate, LastModifiedBy, LastModifiedDate)
+select 603,6,'Meter','Meter', 1,0,1,1,1,now(),1,now()
+where NOT EXISTS(select * from CFG_CodeValue where codeTypeId = 6 and CodeValueID=603)
+
 --------------------------------------------
+
+
 
 ALTER Table txn_user
 ADD Column workemployer varchar(255);

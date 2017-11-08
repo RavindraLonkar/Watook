@@ -23,24 +23,58 @@ $BODY$
 	
       if(result IS NULL)then
        UPDATE txn_user 
-          SET firstname = (select userJson::json->>'firstname')
-             ,middlename = (select userJson::json->>'middlename')
-             ,lastname = (select userJson::json->>'lastname')    
-             ,dob = (select to_date(userJson::json->>'dob', 'dd/mm/yyyy'))   
-             ,genderid = (select cast(userJson::json->>'genderid' as int))
-             ,contactmobile = (select userJson::json->>'contactmobile')  
-             ,contactmobile2 = (select userJson::json->>'contactmobile2')
-             ,emailid = (select userJson::json->>'emailid')
-             ,advertiseid = (select userJson::json->>'advertiseid')  
-             ,aboutyou = (select userJson::json->>'aboutyou')
-	         ,workemployer = (select userJson::json->>'workemployer')
-	         ,worklocation = (select userJson::json->>'worklocation')
-             ,workposition = (select userJson::json->>'workposition')
-             ,statusinfo = (select cast(userJson::json->>'statusinfo' as int))
-             ,fbimages = (select userJson::json->>'fbimages')
-             ,profileimage = (select userJson::json->>'profileimage')
-             ,firebasetoken = (select userJson::json->>'firebasetoken')
-             ,lastmodifieddate = now() 
+          SET firstname = case when (userJson::json->>'firstname') is null then (select firstname from txn_user where  fbid = (select userJson::json->>'fbid')) else
+			  (select userJson::json->>'firstname') end
+			  
+             ,middlename = case when (userJson::json->>'middlename') is null then (select middlename from txn_user where  fbid = (select userJson::json->>'fbid')) else
+			  (select userJson::json->>'middlename') end
+
+             ,lastname = case when (userJson::json->>'lastname') is null then (select lastname from txn_user where  fbid = (select userJson::json->>'fbid')) else
+			  (select userJson::json->>'lastname') end  
+			  
+             ,dob =  case when (userJson::json->>'dob') is null then (select dob from txn_user where  fbid = (select userJson::json->>'fbid')) else
+			  (select to_date(userJson::json->>'dob', 'dd/mm/yyyy'))  end
+			    
+             ,genderid = case when (userJson::json->>'genderid') is null then (select genderid from txn_user where  fbid = (select userJson::json->>'fbid')) else
+			  (select cast(userJson::json->>'genderid' as int)) end 
+
+             ,contactmobile = case when (userJson::json->>'contactmobile') is null then (select contactmobile from txn_user where  fbid = (select userJson::json->>'fbid')) else
+			  (select userJson::json->>'contactmobile') end
+
+             ,contactmobile2 = case when (userJson::json->>'contactmobile2') is null then (select contactmobile2 from txn_user where  fbid = (select userJson::json->>'fbid')) else
+			  (select userJson::json->>'contactmobile2') end
+
+             ,emailid = case when (userJson::json->>'emailid') is null then (select emailid from txn_user where  fbid = (select userJson::json->>'fbid')) else
+			  (select userJson::json->>'emailid') end
+			  
+             ,advertiseid = case when (userJson::json->>'advertiseid') is null then (select advertiseid from txn_user where  fbid = (select userJson::json->>'fbid')) else
+			  (select userJson::json->>'advertiseid') end
+			  	  
+             ,aboutyou = case when (userJson::json->>'aboutyou') is null then (select aboutyou from txn_user where  fbid = (select userJson::json->>'fbid')) else
+			  (select userJson::json->>'aboutyou') end
+	  
+	     	 ,workemployer = case when (userJson::json->>'workemployer') is null then (select workemployer from txn_user where  fbid = (select userJson::json->>'fbid')) else
+			  (select userJson::json->>'workemployer') end
+			  
+	    	 ,worklocation = case when (userJson::json->>'worklocation') is null then (select worklocation from txn_user where  fbid = (select userJson::json->>'fbid')) else
+			  (select userJson::json->>'worklocation') end
+
+             ,workposition = case when (userJson::json->>'workposition') is null then (select workposition from txn_user where  fbid = (select userJson::json->>'fbid')) else
+			  (select userJson::json->>'workposition') end
+	 
+             ,statusinfo = case when (userJson::json->>'statusinfo') is null then (select statusinfo from txn_user where  fbid = (select userJson::json->>'fbid')) else
+			  (select userJson::json->>'statusinfo') end
+	 
+             ,fbimages = case when (userJson::json->>'fbimages') is null then (select fbimages from txn_user where  fbid = (select userJson::json->>'fbid')) else
+			  (select userJson::json->>'fbimages') end
+	 
+             ,profileimage = case when (userJson::json->>'profileimage') is null then (select profileimage from txn_user where  fbid = (select userJson::json->>'fbid')) else
+			  (select userJson::json->>'profileimage') end
+	 
+             ,firebasetoken= case when (userJson::json->>'firebasetoken') is null then (select firebasetoken from txn_user where  fbid = (select userJson::json->>'fbid')) else
+			  (select userJson::json->>'firebasetoken') end
+
+            ,lastmodifieddate = now() 
              WHERE fbid = (select userJson::json->>'fbid')
              RETURNING userid into result;
      end if;
