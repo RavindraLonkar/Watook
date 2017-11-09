@@ -75,7 +75,11 @@ $BODY$
 			  (select userJson::json->>'firebasetoken') end
 
             ,lastmodifieddate = now() 
-             WHERE fbid = (select userJson::json->>'fbid')
+            
+            ,isactive=case when (userJson::json->>'isactive') is null then (select isactive from txn_user where  fbid = (select userJson::json->>'fbid')) else
+			  (select cast(userJson::json->>'isactive' as int)) end
+			  
+            WHERE fbid = (select userJson::json->>'fbid')
              RETURNING userid into result;
      end if;
 

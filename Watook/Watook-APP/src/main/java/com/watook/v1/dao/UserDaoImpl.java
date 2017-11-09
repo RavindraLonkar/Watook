@@ -126,6 +126,7 @@ public class UserDaoImpl implements UserDao {
 				user.setMiddleName(rs.getString("middlename"));
 				user.setFirstName(rs.getString("firstname"));
 				user.setGenderId(rs.getString("genderid"));
+				user.setDob(rs.getString("dob"));
 				user.setContactMobile(rs.getString("contactmobile"));
 				user.setContactMobile2(rs.getString("contactmobile2"));
 				user.setEmailId(rs.getString("emailid"));
@@ -142,9 +143,9 @@ public class UserDaoImpl implements UserDao {
 				location.setLongitude(rs.getString("longitude"));
 				user.setLocation(location);
 				Request requeststatus=new Request();
-				requeststatus.setRequestFrom(rs.getInt("requestby"));
+				requeststatus.setRequestBy(rs.getInt("requestby"));
 				requeststatus.setRequestTo(rs.getInt("requestto"));
-				requeststatus.setStatusCode(rs.getInt("reqstatus"));
+				requeststatus.setReqstatus(rs.getInt("reqstatus"));
 				user.setRequest(requeststatus);
 				return user;
 			}

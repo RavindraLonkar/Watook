@@ -2,36 +2,43 @@ package com.watook.model;
 
 public class Request {
 
-	private int requestFrom;
+	private int requestId;
+	private int requestBy;
 	private int requestTo;
-	private int statusCode;
-	
-	public Request() {
-		super();
+	private int reqstatus;
+
+
+	public int getRequestId() {
+		return requestId;
 	}
-	
-	public int getRequestFrom() {
-		return requestFrom;
+
+	public void setRequestId(int requestId) {
+		this.requestId = requestId;
 	}
-	public void setRequestFrom(int requestFrom) {
-		this.requestFrom = requestFrom;
+
+	public int getRequestBy() {
+		return requestBy;
 	}
+
+	public void setRequestBy(int requestBy) {
+		this.requestBy = requestBy;
+	}
+
 	public int getRequestTo() {
 		return requestTo;
 	}
+
 	public void setRequestTo(int requestTo) {
 		this.requestTo = requestTo;
 	}
-	public int getStatusCode() {
-		return statusCode;
+
+	public int getReqstatus() {
+		return reqstatus;
 	}
-	public void setStatusCode(int statusCode) {
-		this.statusCode = statusCode;
+
+	public void setReqstatus(int reqstatus) {
+		this.reqstatus = reqstatus;
 	}
-	@Override
-	public String toString() {
-		return "Request [requestFrom=" + requestFrom + ", requestTo=" + requestTo + ", statusCode=" + statusCode + "]";
-	}
-	
-	
+
+
 }

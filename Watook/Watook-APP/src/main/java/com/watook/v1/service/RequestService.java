@@ -4,9 +4,6 @@ import com.watook.model.Request;
 
 public interface RequestService {
 
-
-
-	
-	void saveRequest(Request Request);
+	Request saveRequest(Request Request);
 
 }

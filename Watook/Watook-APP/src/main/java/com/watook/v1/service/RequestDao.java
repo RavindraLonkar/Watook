@@ -5,6 +5,6 @@ import com.watook.model.Request;
 public interface RequestDao {
 
 
-	void saveRequest(Request request);
+	Request saveRequest(Request request);
          
 }

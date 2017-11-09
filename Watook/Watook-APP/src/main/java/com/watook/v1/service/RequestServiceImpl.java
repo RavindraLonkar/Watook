@@ -12,9 +12,10 @@ public class RequestServiceImpl implements RequestService {
 	RequestDao requestDao;
 	
 	 @Override
-	  public void saveRequest(Request Request){
+	  public Request saveRequest(Request Request){
 		   
-		 requestDao.saveRequest(Request);
+		 return requestDao.saveRequest(Request);
+		 
 	  }
 	 
 }
