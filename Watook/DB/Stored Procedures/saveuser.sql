@@ -53,17 +53,17 @@ $BODY$
              ,aboutyou = case when (userJson::json->>'aboutyou') is null then (select aboutyou from txn_user where  fbid = (select userJson::json->>'fbid')) else
 			  (select userJson::json->>'aboutyou') end
 	  
-	     	 ,workemployer = case when (userJson::json->>'workemployer') is null then (select workemployer from txn_user where  fbid = (select userJson::json->>'fbid')) else
+	     ,workemployer = case when (userJson::json->>'workemployer') is null then (select workemployer from txn_user where  fbid = (select userJson::json->>'fbid')) else
 			  (select userJson::json->>'workemployer') end
 			  
-	    	 ,worklocation = case when (userJson::json->>'worklocation') is null then (select worklocation from txn_user where  fbid = (select userJson::json->>'fbid')) else
+	     ,worklocation = case when (userJson::json->>'worklocation') is null then (select worklocation from txn_user where  fbid = (select userJson::json->>'fbid')) else
 			  (select userJson::json->>'worklocation') end
 
              ,workposition = case when (userJson::json->>'workposition') is null then (select workposition from txn_user where  fbid = (select userJson::json->>'fbid')) else
 			  (select userJson::json->>'workposition') end
 	 
-             ,statusinfo = case when (userJson::json->>'statusinfo') is null then (select statusinfo from txn_user where  fbid = (select userJson::json->>'fbid')) else
-			  (select userJson::json->>'statusinfo') end
+             ,statusinfo = case when (userJson::json->>'statusinfo') is null then (select statusinfo from txn_user where  fbid = (select userJson::json->>'fbid') ) else
+			  (select cast(userJson::json->>'statusinfo' as int)) end
 	 
              ,fbimages = case when (userJson::json->>'fbimages') is null then (select fbimages from txn_user where  fbid = (select userJson::json->>'fbid')) else
 			  (select userJson::json->>'fbimages') end

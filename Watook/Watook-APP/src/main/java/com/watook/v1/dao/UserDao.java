@@ -16,6 +16,6 @@ public interface UserDao {
 
 	Prefernces getUserData(String userId);
 
-	User getUser(String userId);
+	User getUser(String userId,String requestId);
 
 }

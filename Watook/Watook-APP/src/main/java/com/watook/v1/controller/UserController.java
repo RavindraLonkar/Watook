@@ -132,8 +132,9 @@ public class UserController {
 	public Response getUser(HttpServletRequest request) {
 		Response response = null;
 		String userId = request.getParameter("userId");
+		String requestId = request.getParameter("requestId");
 		try {
-			User user = userService.getUser(userId);
+			User user = userService.getUser(userId,requestId);
 			if (user == null) {
 				response = new Response(CommonConstants.FAIL, null, CommonConstants.SYSTEM_ERROR);
 			} else {

@@ -97,17 +97,17 @@ where NOT EXISTS(select * from cfg_codeType where codeTypeId = 5)
 
 --Accept
 insert into CFG_CodeValue(CodeValueID, CodeTypeId, CodeValue, CodeValueDescription, DisplaySeqNo, IsDefault, IsDisplay, IsActive, CreatedBy, CreatedDate, LastModifiedBy, LastModifiedDate)
-select 501,5,'Accept','Accept', 1,0,1,1,1,now(),1,now()
+select 501,5,'Accepted','Accepted', 1,0,1,1,1,now(),1,now()
 where NOT EXISTS(select * from CFG_CodeValue where codeTypeId = 5 and CodeValueID=501)
 
 -- Reject
 insert into CFG_CodeValue(CodeValueID, CodeTypeId, CodeValue, CodeValueDescription, DisplaySeqNo, IsDefault, IsDisplay, IsActive, CreatedBy, CreatedDate, LastModifiedBy, LastModifiedDate)
-select 502,5,'Reject','Reject', 1,0,1,1,1,now(),1,now()
+select 502,5,'Rejected','Rejected', 1,0,1,1,1,now(),1,now()
 where NOT EXISTS(select * from CFG_CodeValue where codeTypeId = 5 and CodeValueID=502)
 
 -- Sent Request
 insert into CFG_CodeValue(CodeValueID, CodeTypeId, CodeValue, CodeValueDescription, DisplaySeqNo, IsDefault, IsDisplay, IsActive, CreatedBy, CreatedDate, LastModifiedBy, LastModifiedDate)
-select 503,5,'Request Send','Request Send', 1,0,1,1,1,now(),1,now()
+select 503,5,'Liked','Liked', 1,0,1,1,1,now(),1,now()
 where NOT EXISTS(select * from CFG_CodeValue where codeTypeId = 5 and CodeValueID=503)
 
 -- Blocked

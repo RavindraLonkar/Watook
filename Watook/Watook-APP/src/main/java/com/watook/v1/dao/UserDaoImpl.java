@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.watook.model.Location;
 import com.watook.model.Prefernces;
+import com.watook.model.Request;
 import com.watook.model.User;
 import com.watook.model.UserNearBy;
 import com.watook.utils.CommonProcedures;
@@ -111,9 +112,10 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public User getUser(String userId) {
+	public User getUser(String userId,String requestId) {
 		MapSqlParameterSource parameters = new MapSqlParameterSource();
 		parameters.addValue("id", Integer.parseInt(userId));
+		parameters.addValue("requestId", Integer.parseInt(requestId));
 		NamedParameterJdbcTemplate namedJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
 		User list = namedJdbcTemplate.queryForObject(CommonQueries.SP_GET_USER, parameters, new RowMapper<User>() {
 			@Override
@@ -139,6 +141,11 @@ public class UserDaoImpl implements UserDao {
 				location.setLatitude(rs.getString("latitude"));
 				location.setLongitude(rs.getString("longitude"));
 				user.setLocation(location);
+				Request requeststatus=new Request();
+				requeststatus.setRequestFrom(rs.getInt("requestby"));
+				requeststatus.setRequestTo(rs.getInt("requestto"));
+				requeststatus.setStatusCode(rs.getInt("reqstatus"));
+				user.setRequest(requeststatus);
 				return user;
 			}
 		});
