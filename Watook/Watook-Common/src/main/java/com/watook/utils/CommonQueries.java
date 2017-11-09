@@ -12,6 +12,7 @@ public class CommonQueries {
 	public static final String SP_GET_USER = "select * from txn_user u left join txn_usertracking ut "
 			+ "on ut.userid = u.userid left join txn_userrequest ur "
 			+ "on ((ur.requestby=:id and ur.requestto=:requestId) or (ur.requestby=:requestId and ur.requestto=:id)) "
-			+ "where u.userid=:id";
+			+ "where u.userid=:id "
+			+ "order by ur.lastmodifieddate desc limit 1";
 
 }

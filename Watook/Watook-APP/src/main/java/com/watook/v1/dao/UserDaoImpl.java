@@ -12,7 +12,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.stereotype.Repository;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -25,7 +24,6 @@ import com.watook.utils.CommonProcedures;
 import com.watook.utils.CommonQueries;
 import com.watook.utils.FieldNamingPolicies;
 
-@Repository
 public class UserDaoImpl implements UserDao {
 
 	@Autowired
@@ -112,7 +110,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public User getUser(String userId,String requestId) {
+	public User getUser(String userId, String requestId) {
 		MapSqlParameterSource parameters = new MapSqlParameterSource();
 		parameters.addValue("id", Integer.parseInt(userId));
 		parameters.addValue("requestId", Integer.parseInt(requestId));
@@ -142,10 +140,12 @@ public class UserDaoImpl implements UserDao {
 				location.setLatitude(rs.getString("latitude"));
 				location.setLongitude(rs.getString("longitude"));
 				user.setLocation(location);
-				Request requeststatus=new Request();
+				Request requeststatus = new Request();
+				requeststatus.setRequestId(rs.getInt("id"));
 				requeststatus.setRequestBy(rs.getInt("requestby"));
 				requeststatus.setRequestTo(rs.getInt("requestto"));
 				requeststatus.setReqstatus(rs.getInt("reqstatus"));
+				requeststatus.setRejectattemtcount(rs.getInt("rejectattemtcount"));
 				user.setRequest(requeststatus);
 				return user;
 			}
@@ -153,5 +153,4 @@ public class UserDaoImpl implements UserDao {
 
 		return list;
 	}
-
 }

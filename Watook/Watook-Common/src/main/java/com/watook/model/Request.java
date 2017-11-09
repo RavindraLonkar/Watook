@@ -6,7 +6,7 @@ public class Request {
 	private int requestBy;
 	private int requestTo;
 	private int reqstatus;
-
+	private int rejectattemtcount;
 
 	public int getRequestId() {
 		return requestId;
@@ -40,5 +40,12 @@ public class Request {
 		this.reqstatus = reqstatus;
 	}
 
+	public int getRejectattemtcount() {
+		return rejectattemtcount;
+	}
+
+	public void setRejectattemtcount(int rejectattemtcount) {
+		this.rejectattemtcount = rejectattemtcount;
+	}
 
 }
