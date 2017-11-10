@@ -1,5 +1,10 @@
 package com.watook.v1.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -9,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.watook.model.Request;
 import com.watook.model.Response;
+import com.watook.model.User;
 import com.watook.utils.CommonConstants;
 import com.watook.v1.service.RequestService;
 
@@ -34,5 +40,26 @@ public class RequestController {
 			response = new Response(CommonConstants.FAIL, null, CommonConstants.SYSTEM_ERROR);
 		}
 		return response;
+	}
+	
+	@RequestMapping(value="/list")
+	public Response list(HttpServletRequest req)
+	{
+		String userId=req.getParameter("userId");
+		
+		Response response = null;
+		List<User> requestList=null;//=new ArrayList<User>;
+		try {
+			requestList = requestService.list(userId);
+			if (requestList.isEmpty()) {
+				response = new Response(CommonConstants.FAIL, null, CommonConstants.RECORD_NOT_FOUND);
+			} else {
+				response = new Response(CommonConstants.SUCCESS, requestList, null);
+			}
+		} catch (Exception e) {
+			response = new Response(CommonConstants.FAIL, null, CommonConstants.SYSTEM_ERROR);
+		}
+		return response;
+		
 	}
 }
