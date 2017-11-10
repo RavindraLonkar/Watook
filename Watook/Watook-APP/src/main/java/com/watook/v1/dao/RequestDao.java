@@ -1,4 +1,4 @@
-package com.watook.v1.service;
+package com.watook.v1.dao;
 
 import java.util.List;
 
