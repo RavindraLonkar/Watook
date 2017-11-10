@@ -31,8 +31,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<UserNearBy> getUserNearByList(String userId) {
 		List<UserNearBy> userList = new ArrayList<UserNearBy>();
-		userList = userDao.getUserNearByList(userId);
 		Prefernces userObj = userDao.getUserData(userId);
+		userList = userDao.getUserNearByList(userId, userObj.getAgeMin(), userObj.getAgeMax(),
+				userObj.getMaleInterest(), userObj.getFemaleInterest());
 
 		// CalculateDistance
 		Float distanceRange = Float.parseFloat(userObj.getDistanceRange()) * 1000;
@@ -51,8 +52,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User getUser(String userId,String requestId) {
-		return userDao.getUser(userId,requestId);
+	public User getUser(String userId, String requestId) {
+		return userDao.getUser(userId, requestId);
 	}
 
 }

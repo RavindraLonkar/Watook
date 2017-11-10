@@ -12,7 +12,7 @@ public interface UserDao {
 
 	List<User> getUserList();
 
-	List<UserNearBy> getUserNearByList(String userId);
+	List<UserNearBy> getUserNearByList(String userId,String agemin,String agemax,String maleinterest,String femaleinterest);
 
 	Prefernces getUserData(String userId);
 

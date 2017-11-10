@@ -116,8 +116,8 @@ public class UserController {
 		String userId = request.getParameter("userId");
 		try {
 			List<UserNearBy> userList = userService.getUserNearByList(userId);
-			if (userList.isEmpty()) {
-				response = new Response(CommonConstants.FAIL, null, CommonConstants.SYSTEM_ERROR);
+			if (userList==null || userList.isEmpty()) {
+				response = new Response(CommonConstants.SUCCESS, userList, CommonConstants.RECORD_NOT_FOUND);
 			} else {
 				response = new Response(CommonConstants.SUCCESS, userList, null);
 			}

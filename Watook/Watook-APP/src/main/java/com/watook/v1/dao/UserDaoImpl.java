@@ -102,9 +102,13 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public List<UserNearBy> getUserNearByList(String userId) {
+	public List<UserNearBy> getUserNearByList(String userId,String agemin,String agemax,String maleinterest,String femaleinterest) {
 		MapSqlParameterSource parameters = new MapSqlParameterSource();
-		parameters.addValue("id", Integer.parseInt(userId));
+		parameters.addValue("userId", Integer.parseInt(userId));
+		parameters.addValue("agemin", Integer.parseInt(agemin));
+		parameters.addValue("agemax", Integer.parseInt(agemax));
+		parameters.addValue("maleinterest", Integer.parseInt(maleinterest));
+		parameters.addValue("femaleinterest", Integer.parseInt(femaleinterest));
 		BeanPropertyRowMapper<UserNearBy> rowMapper = BeanPropertyRowMapper.newInstance(UserNearBy.class);
 		NamedParameterJdbcTemplate namedJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
 		List<UserNearBy> list = namedJdbcTemplate.query(CommonQueries.SP_GET_USERLIST_NEARBY, parameters, rowMapper);
