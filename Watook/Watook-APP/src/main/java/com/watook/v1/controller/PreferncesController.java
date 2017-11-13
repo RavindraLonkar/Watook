@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -45,15 +46,18 @@ public class PreferncesController {
 	@RequestMapping(value = "/get", method = RequestMethod.GET)
 	public Response get(HttpServletRequest request) {
 		Response response = null;
+		Prefernces savedSetting = null;
 		try {
 
 			String userId = request.getParameter("userId");
-			Prefernces savedSetting = settingService.get(userId);
+			savedSetting = settingService.get(userId);
 			if (savedSetting.getSettingId() == null) {
-				response = new Response(CommonConstants.FAIL, savedSetting, CommonConstants.SYSTEM_ERROR);
+				response = new Response(CommonConstants.SUCCESS, savedSetting, CommonConstants.RECORD_NOT_FOUND);
 			} else {
 				response = new Response(CommonConstants.SUCCESS, savedSetting, null);
 			}
+		} catch (EmptyResultDataAccessException e) {
+			response = new Response(CommonConstants.SUCCESS, new Prefernces(), CommonConstants.RECORD_NOT_FOUND);
 		} catch (Exception e) {
 			logger.info("Error : " + e);
 			response = new Response(CommonConstants.FAIL, null, CommonConstants.SYSTEM_ERROR);

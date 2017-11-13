@@ -1,6 +1,5 @@
 package com.watook.v1.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,11 +47,11 @@ public class RequestController {
 		String userId=req.getParameter("userId");
 		
 		Response response = null;
-		List<User> requestList=null;//=new ArrayList<User>;
+		List<User> requestList=null;
 		try {
 			requestList = requestService.list(userId);
 			if (requestList.isEmpty()) {
-				response = new Response(CommonConstants.FAIL, null, CommonConstants.RECORD_NOT_FOUND);
+				response = new Response(CommonConstants.SUCCESS, requestList, CommonConstants.RECORD_NOT_FOUND);
 			} else {
 				response = new Response(CommonConstants.SUCCESS, requestList, null);
 			}

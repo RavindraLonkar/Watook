@@ -58,11 +58,15 @@ public class RequestDaoImpl implements RequestDao {
 				User user = new User();
 				user.setUserId(rs.getString("userid"));
 				user.setFirstName(rs.getString("firstname"));
+				user.setLastName(rs.getString("lastname"));
 				user.setProfileImage(rs.getString("profileimage"));
 				Location location = new Location();
 				location.setLatitude(rs.getString("latitude"));
 				location.setLongitude(rs.getString("longitude"));
 				user.setLocation(location);
+				Request req=new Request();
+				req.setRequestBy(rs.getInt("requestby"));
+				user.setRequest(req);
 				
 				return user;
 			}

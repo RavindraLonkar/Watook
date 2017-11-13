@@ -16,12 +16,14 @@ public class CommonQueries {
 			+ "on ((ur.requestby=:id and ur.requestto=:requestId) or (ur.requestby=:requestId and ur.requestto=:id)) "
 			+ "where u.userid=:requestId " + "order by ur.lastmodifieddate desc limit 1";
 
-	public static final String SP_GET_REQUEST_USERLIST = "select u.userid,u.firstname,u.age,u.profileimage,ut.latitude,ut.longitude"
-			+ " from txn_user u inner join txn_userrequest t on u.userid=t.requestby"
-			+ " left join txn_usertracking ut on ut.userid=t.requestby where t.requestto=:userId and t.rejectattemtcount<=3 and t.reqstatus=503";
+	public static final String SP_GET_REQUEST_USERLIST = "select u.userid,u.firstname,u.lastname,u.age,u.profileimage,ut.latitude,ut.longitude,t.requestby"
+			+ " from txn_user u inner join txn_userrequest t"
+			+ " on (u.userid=t.requestby and t.requestby!=:userId) or (u.userid=t.requestto and t.requestto!=:userId)"
+			+ "	 inner join txn_usertracking ut on ut.userid=u.userid where (t.requestto=:userId or t.requestby=:userId)  and t.rejectattemtcount<=3 and t.reqstatus=503";
 
-	public static final String SP_GET_FRIEND_LIST = "select * from txn_user u   " + "inner join txn_userrequest ur  "
-			+ " on u.userid=ur.requestby   left join txn_usertracking ut on ut.userid = ur.requestby "
-			+ "where (ur.requestby=:id or ur.requestto=:id) and ur.reqstatus=501";
+	public static final String SP_GET_FRIEND_LIST = "select * from txn_userrequest ur inner join txn_user u "
+			+ " on (u.userid=ur.requestby and ur.requestby!=:id) or (u.userid=ur.requestto and ur.requestto!=:id) "
+			+ "inner join txn_usertracking ut on ut.userid = u.userid "			
+			+ " where ur.reqstatus=501 and (ur.requestby=:id or ur.requestto=:id) ";
 
 }

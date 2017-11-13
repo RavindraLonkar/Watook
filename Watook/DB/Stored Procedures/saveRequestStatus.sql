@@ -4,7 +4,7 @@ select saveRequestStatus('{"requestid":0,"requestby":30,"requestto":27,"reqstatu
 ***********************************************************************************************/
 -- DROP FUNCTION public.saveRequestStatus(text);
 
-CREATE OR REPLACE FUNCTION public.saveRequestStatus(requestjson text)
+CREATE OR REPLACE FUNCTION public.saverequeststatus(requestjson text)
   RETURNS character varying AS
 $BODY$
   DECLARE result character varying; 
@@ -24,7 +24,7 @@ $BODY$
           SET requestby = (select cast(requestjson::json->>'requestby'  as int))
              ,requestto = (select cast(requestjson::json->>'requestto' as int))
              ,reqstatus = (select cast(requestjson::json->>'reqstatus' as int))  
-             ,rejectattemtcount =  case when (cast(requestjson::json->>'reqstatus' as int)=501 or cast(requestjson::json->>'reqstatus' as int)=503 or cast(requestjson::json->>'reqstatus' as int)=504)
+             ,rejectattemtcount =  case when (cast(requestjson::json->>'reqstatus' as int)=0 or cast(requestjson::json->>'reqstatus' as int)=501 or cast(requestjson::json->>'reqstatus' as int)=503 or cast(requestjson::json->>'reqstatus' as int)=504)
 					 then 
 						(select  cast(rejectattemtcount as int) from txn_userrequest where 
 						(requestby=cast(requestjson::json->>'requestby' as int) and requestto=cast(requestjson::json->>'requestto' as int))
@@ -35,6 +35,7 @@ $BODY$
 						(requestby=cast(requestjson::json->>'requestby' as int) and requestto=cast(requestjson::json->>'requestto' as int))
 						)
 				        end  
+	     ,lastmodifieddate=now()
              WHERE (requestby=cast(requestjson::json->>'requestby' as int) and requestto=cast(requestjson::json->>'requestto' as int)) 
 		        
              RETURNING id into result;
