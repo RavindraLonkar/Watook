@@ -5,11 +5,9 @@ public class CommonQueries {
 	public static final String SP_GET_USERSETTING = "SELECT s.userid,s.distancerange,t.longitude,t.latitude,s.agemin,s.agemax,"
 			+ "COALESCE(s.femaleinterest,0) femaleinterest, COALESCE(s.maleinterest,0) maleinterest from txn_usersetting s inner join txn_usertracking t on s.userid=t.userid where s.userId = :id";
 
-	public static final String SP_GET_USERLIST_NEARBY = "select u.userid,u.firstname,u.lastname,u.statusinfo,u.profileimage,u.fbimages,u.firebasetoken,u.age,u.dob, "
-			+ "u.genderid,u.aboutyou,u.workemployer,u.worklocation,u.workposition,ut.latitude,ut.longitude,COALESCE(ur.reqstatus,0) as requestStatus from txn_user u  "
-			+ "inner join txn_usertracking ut on ut.userid = u.userid	"
-			+ "left join txn_userrequest ur on u.userid = ur.requestby 	where u.userid!=:userId	"
-			+ "and (u.age>=:agemin and u.age<=:agemax) and u.genderid in(:maleinterest,:femaleinterest) and u.isactive=1 ";
+	public static final String SP_GET_USERLIST_NEARBY = "select u.userid,u.firstname,u.lastname,u.statusinfo,u.profileimage,u.firebasetoken,u.age,u.dob,ut.latitude,ut.longitude from txn_user u"
+			+ " inner join txn_usertracking ut on ut.userid = u.userid"
+			+ "	where u.userid!=:userId	and (u.age>=:agemin and u.age<=:agemax) and u.genderid in(:maleinterest,:femaleinterest) and u.isactive=1 ";
 
 	public static final String SP_GET_USER = "select * from txn_user u left join txn_usertracking ut "
 			+ "on ut.userid = u.userid left join txn_userrequest ur "
@@ -23,7 +21,7 @@ public class CommonQueries {
 
 	public static final String SP_GET_FRIEND_LIST = "select * from txn_userrequest ur inner join txn_user u "
 			+ " on (u.userid=ur.requestby and ur.requestby!=:id) or (u.userid=ur.requestto and ur.requestto!=:id) "
-			+ "inner join txn_usertracking ut on ut.userid = u.userid "			
+			+ "inner join txn_usertracking ut on ut.userid = u.userid "
 			+ " where ur.reqstatus=501 and (ur.requestby=:id or ur.requestto=:id) ";
 
 }
