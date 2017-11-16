@@ -16,8 +16,8 @@ public class CommonQueries {
 
 	public static final String SP_GET_REQUEST_USERLIST = "select u.userid,u.firstname,u.lastname,u.age,u.profileimage,ut.latitude,ut.longitude,t.requestby"
 			+ " from txn_user u inner join txn_userrequest t"
-			+ " on (u.userid=t.requestby and t.requestby!=:userId) or (u.userid=t.requestto and t.requestto!=:userId)"
-			+ "	 inner join txn_usertracking ut on ut.userid=u.userid where (t.requestto=:userId or t.requestby=:userId)  and t.rejectattemtcount<=3 and t.reqstatus=503";
+			+ " on (u.userid=t.requestby and t.requestby!=:userId) or (u.userid=t.requestto and t.requestto!=:userId) "
+			+ " inner join txn_usertracking ut on ut.userid=u.userid where (t.requestto=:userId or t.requestby=:userId)  and t.rejectattemtcount<=3 and t.reqstatus=503 and t.isactive=1";
 
 	public static final String SP_GET_FRIEND_LIST = "select * from txn_userrequest ur inner join txn_user u "
 			+ " on (u.userid=ur.requestby and ur.requestby!=:id) or (u.userid=ur.requestto and ur.requestto!=:id) "

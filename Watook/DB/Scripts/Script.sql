@@ -166,6 +166,8 @@ ADD Column workposition varchar(255);
 ALTER Table txn_user
 DROP column workinfo
 
+alter table txn_userrequest 
+add column isactive int
 -----------------------------------------------------
 -- change name of the setting table id
 ALTER TABLE txn_usersetting RENAME COLUMN id TO settingId
