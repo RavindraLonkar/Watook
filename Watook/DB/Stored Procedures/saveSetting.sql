@@ -9,7 +9,7 @@ $BODY$
   DECLARE result character varying; 
  BEGIN
 
-      update txn_user set discoverable=cast(settingjson::json->>'maleinterest' as int)   WHERE userid = (select cast(settingjson::json->>'userid' as int));
+      update txn_user set discoverable=cast(settingjson::json->>'discoverable' as int)   WHERE userid = (select cast(settingjson::json->>'userid' as int));
       
       INSERT INTO txn_usersetting (userid,distancerange,distancein,agemin,agemax,femaleinterest,maleinterest,createddate,lastmodifieddate)
       SELECT userid,distancerange,distancein,agemin,agemax,femaleinterest,maleinterest,now(),now() FROM json_populate_record(null::txn_usersetting, settingjson::json)
