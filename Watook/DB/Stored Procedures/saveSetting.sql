@@ -9,6 +9,8 @@ $BODY$
   DECLARE result character varying; 
  BEGIN
 
+      update txn_user set discoverable=cast(settingjson::json->>'maleinterest' as int)   WHERE userid = (select cast(settingjson::json->>'userid' as int));
+      
       INSERT INTO txn_usersetting (userid,distancerange,distancein,agemin,agemax,femaleinterest,maleinterest,createddate,lastmodifieddate)
       SELECT userid,distancerange,distancein,agemin,agemax,femaleinterest,maleinterest,now(),now() FROM json_populate_record(null::txn_usersetting, settingjson::json)
       WHERE NOT EXISTS (select 1 from txn_usersetting where userid = (select cast(settingjson::json->>'userid' as int)) limit 1)
@@ -31,12 +33,14 @@ $BODY$
            
              ,femaleinterest = (select cast(settingjson::json->>'femaleinterest' as int)) 
 
-            ,maleinterest = (select cast(settingjson::json->>'maleinterest' as int))
+             ,maleinterest = (select cast(settingjson::json->>'maleinterest' as int))
 			  
              ,lastmodifieddate = now()
              WHERE userid = (select cast(settingjson::json->>'userid' as int))
              RETURNING settingid into result;
       end if;
+
+      
 
       RETURN result;
  END;

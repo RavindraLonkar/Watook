@@ -29,7 +29,7 @@ $BODY$
           SET requestby = (select cast(requestjson::json->>'requestby'  as int))
              ,requestto = (select cast(requestjson::json->>'requestto' as int))
              ,reqstatus = (select cast(requestjson::json->>'reqstatus' as int))  
-             ,rejectattemtcount =  case when (cast(requestjson::json->>'reqstatus' as int)=501 or cast(requestjson::json->>'reqstatus' as int)=503 or cast(requestjson::json->>'reqstatus' as int)=504)
+             ,rejectattemtcount =  case when (cast(requestjson::json->>'reqstatus' as int)=501 or cast(requestjson::json->>'reqstatus' as int)=503 or cast(requestjson::json->>'reqstatus' as int)=504 or cast(requestjson::json->>'reqstatus' as int)=0)
 					 then 
 						(select  cast(rejectattemtcount as int) from txn_userrequest where 
 						(requestby=cast(requestjson::json->>'requestby' as int) and requestto=cast(requestjson::json->>'requestto' as int))
@@ -41,7 +41,7 @@ $BODY$
 						)
 				        end
 	    ,isactive=1
-				          
+	    ,lastmodifieddate=now()
              WHERE (requestby=cast(requestjson::json->>'requestby' as int) and requestto=cast(requestjson::json->>'requestto' as int)) 
 		        
              RETURNING id into result;
