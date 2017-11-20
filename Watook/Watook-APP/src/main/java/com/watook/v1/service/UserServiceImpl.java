@@ -36,8 +36,9 @@ public class UserServiceImpl implements UserService {
 				userObj.getMaleInterest(), userObj.getFemaleInterest());
 
 		// CalculateDistance
-		Float distanceRange = Float.parseFloat(userObj.getDistanceRange()) * 1000;
-		Float distance;
+		// distance range in meter
+		Double distanceRange = Double.parseDouble(userObj.getDistanceRange());
+		Double distance;
 		List<UserNearBy> nearByList = new ArrayList<UserNearBy>();
 		for (UserNearBy user : userList) {
 			distance = CalculateDistance.getDistance(Float.parseFloat(userObj.getLongitude()),
