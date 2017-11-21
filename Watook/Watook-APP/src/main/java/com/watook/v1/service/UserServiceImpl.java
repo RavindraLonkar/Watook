@@ -62,5 +62,15 @@ public class UserServiceImpl implements UserService {
 		data.setTodaysRating(userDao.todaysRatingCount(requestId, date));
 		return data;
 	}
+	
+	@Override
+	public User getUserProfile(String userId) {
+		User data = new User();
+		data = userDao.getUserProfile(userId);
+		data.setOverallRating(userDao.overallRatingCount(userId));
+		String date = CommonUtilities.CurrentDate();
+		data.setTodaysRating(userDao.todaysRatingCount(userId, date));
+		return data;
+	}
 
 }

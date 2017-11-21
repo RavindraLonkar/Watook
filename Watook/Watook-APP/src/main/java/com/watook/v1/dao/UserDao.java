@@ -23,4 +23,6 @@ public interface UserDao {
 
 	String todaysRatingCount(String userId, String Date);
 
+	User getUserProfile(String userId);
+
 }

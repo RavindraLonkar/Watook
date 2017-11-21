@@ -178,4 +178,11 @@ public class UserDaoImpl implements UserDao {
 		NamedParameterJdbcTemplate namedJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
 		return namedJdbcTemplate.queryForObject(CommonQueries.SP_GET_TODAYS_RATING, parameters, String.class);
 	}
+
+	@Override
+	public User getUserProfile(String userId) {
+		BeanPropertyRowMapper<User> rowMapper = BeanPropertyRowMapper.newInstance(User.class);
+		User list = (User) getData(userId, rowMapper, CommonQueries.SP_GET_USER_PROFILE);
+		return list;
+	}
 }

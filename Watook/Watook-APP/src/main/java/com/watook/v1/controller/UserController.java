@@ -127,7 +127,7 @@ public class UserController {
 		return response;
 	}
 
-	// get user data
+	// get user data with location and request
 	@RequestMapping(value = "/get", method = RequestMethod.GET)
 	public Response getUser(HttpServletRequest request) {
 		Response response = null;
@@ -145,4 +145,22 @@ public class UserController {
 		}
 		return response;
 	}
+	
+	// get user data
+		@RequestMapping(value = "/profile", method = RequestMethod.GET)
+		public Response getUserProfile(HttpServletRequest request) {
+			Response response = null;
+			String userId = request.getParameter("userId");
+			try {
+				User user = userService.getUserProfile(userId);
+				if (user == null) {
+					response = new Response(CommonConstants.FAIL, null, CommonConstants.SYSTEM_ERROR);
+				} else {
+					response = new Response(CommonConstants.SUCCESS, user, null);
+				}
+			} catch (Exception e) {
+				response = new Response(CommonConstants.FAIL, null, CommonConstants.SYSTEM_ERROR);
+			}
+			return response;
+		}
 }

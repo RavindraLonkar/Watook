@@ -1,6 +1,8 @@
 package com.watook.utils;
 
 public class CommonQueries {
+	public static final String SP_GET_USER_PROFILE = "select * from txn_user where userid=:id and isactive=1";
+	
 	public static final String SP_GET_USERLIST = "select * from txn_user u left join txn_usertracking ut on ut.userid = u.userid where u.isactive=1";
 	
 	public static final String SP_GET_USERSETTING = "SELECT s.userid,s.distancerange,t.longitude,t.latitude,s.agemin,s.agemax,"
