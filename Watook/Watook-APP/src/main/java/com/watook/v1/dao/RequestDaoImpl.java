@@ -45,34 +45,45 @@ public class RequestDaoImpl implements RequestDao {
 		return status;
 
 	}
-	
+
 	@Override
-	public List<User> list(String userId){
-		
+	public List<User> list(String userId, String requestStatus) {
+
 		MapSqlParameterSource parameters = new MapSqlParameterSource();
 		parameters.addValue("userId", Integer.parseInt(userId));
+		parameters.addValue("requestStatus", Integer.parseInt(requestStatus));
 		NamedParameterJdbcTemplate namedJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-		List<User> list = namedJdbcTemplate.query(CommonQueries.SP_GET_REQUEST_USERLIST, parameters,  new RowMapper<User>() {
-			@Override
-			public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-				User user = new User();
-				user.setUserId(rs.getString("userid"));
-				user.setFirstName(rs.getString("firstname"));
-				user.setLastName(rs.getString("lastname"));
-				user.setProfileImage(rs.getString("profileimage"));
-				Location location = new Location();
-				location.setLatitude(rs.getString("latitude"));
-				location.setLongitude(rs.getString("longitude"));
-				user.setLocation(location);
-				Request req=new Request();
-				req.setRequestBy(rs.getInt("requestby"));
-				user.setRequest(req);
-				
-				return user;
-			}
-		});
-		
-		return list;  
-		
+		List<User> list = namedJdbcTemplate.query(CommonQueries.SP_GET_REQUEST_USERLIST, parameters,
+				new RowMapper<User>() {
+					@Override
+					public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+						User user = new User();
+						user.setUserId(rs.getString("userid"));
+						user.setFirstName(rs.getString("firstname"));
+						user.setLastName(rs.getString("lastname"));
+						user.setProfileImage(rs.getString("profileimage"));
+						Location location = new Location();
+						location.setLatitude(rs.getString("latitude"));
+						location.setLongitude(rs.getString("longitude"));
+						user.setLocation(location);
+						Request req = new Request();
+						req.setRequestBy(rs.getInt("requestby"));
+						user.setRequest(req);
+
+						return user;
+					}
+				});
+
+		return list;
+
+	}
+
+	@Override
+	public Integer requestRating(String ratingId, String ratingTo) {
+		JdbcTemplate jdbcTemplate = new JdbcTemplate();
+		jdbcTemplate.setDataSource(dataSource);
+		String requstId = jdbcTemplate.queryForObject(CommonProcedures.SP_USER_PROFILE_RATING,
+				new Object[] { Integer.parseInt(ratingId), Integer.parseInt(ratingTo) }, String.class);
+		return Integer.parseInt(requstId);
 	}
 }

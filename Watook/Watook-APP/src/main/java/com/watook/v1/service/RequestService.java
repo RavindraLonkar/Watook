@@ -9,6 +9,9 @@ public interface RequestService {
 
 	Request saveRequest(Request Request);
 
-	List<User> list(String userid);
+	List<User> list(String userid,String requestStatus);
+	
+	Integer requestRating(String ratingId,String ratingTo);
+
 
 }

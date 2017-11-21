@@ -23,9 +23,14 @@ public class RequestServiceImpl implements RequestService {
 	  }
 	 
 	 @Override
-	  public List<User> list(String userid){
+	  public List<User> list(String userid,String requestStatus){
 		   
-		 return requestDao.list(userid);
+		 return requestDao.list(userid,requestStatus);
 		 
 	  }
+
+	@Override
+	public Integer requestRating(String ratingId, String ratingTo) {
+		return requestDao.requestRating(ratingId, ratingTo);
+	}
 }

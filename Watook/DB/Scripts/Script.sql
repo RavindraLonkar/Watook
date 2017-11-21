@@ -174,6 +174,10 @@ add column isactive int
 
 Alter table txn_usertracking
 add column lastmodifieddate timestamp without time zone
+
+Alter table txn_user
+add column LastActive timestamp without time zone
+
 -----------------------------------------------------
 -- change name of the setting table id
 ALTER TABLE txn_usersetting RENAME COLUMN id TO settingId

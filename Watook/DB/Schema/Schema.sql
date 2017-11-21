@@ -128,4 +128,13 @@ FOREIGN KEY(ReqStatus) REFERENCES cfg_codevalue(CodeValueID)
 )
 
 
-
+create table TXN_ProfileRating(
+RatingId 	           serial not null,
+RatingBy          	   int not null,
+RatingTo          	   int not null,    
+createdDate      	   timestamp NOT NULL,
+LastModifiedDate	   timestamp not null,
+CONSTRAINT TXN_ProfileRating_pkey PRIMARY KEY (RatingId),
+FOREIGN KEY(RatingBy) REFERENCES txn_user(userid),
+FOREIGN KEY(RatingTo) REFERENCES txn_user(userid)    
+)

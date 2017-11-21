@@ -5,4 +5,6 @@ public class CommonProcedures {
 	public static final String SP_SAVE_USERSETTING = "SELECT * from saveSetting(?)";
 	public static final String SP_USER_REQUEST_STATUS= "SELECT * from saveRequestStatus(?)";
 	
+	public static final String SP_USER_PROFILE_RATING= "SELECT * from saveProfileRating(?,?)";
+	
 }
