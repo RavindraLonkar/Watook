@@ -10,6 +10,7 @@ public interface RequestDao {
 
 	Request saveRequest(Request request);
 
-	List<User> list(String userId);
+	List<User> list(String userId,String requestStatus);
          
+	Integer requestRating(String ratingId,String ratingTo);
 }

@@ -29,6 +29,9 @@ public class User {
 	private Location location;
 	private Request request;
 	
+	private String overallRating;
+	private String todaysRating;
+	
 	public String getUserId() {
 		return userId;
 	}
@@ -191,5 +194,18 @@ public class User {
 	public void setRequest(Request request) {
 		this.request = request;
 	}
+	public String getOverallRating() {
+		return overallRating;
+	}
+	public void setOverallRating(String overallRating) {
+		this.overallRating = overallRating;
+	}
+	public String getTodaysRating() {
+		return todaysRating;
+	}
+	public void setTodaysRating(String todaysRating) {
+		this.todaysRating = todaysRating;
+	}
+	
 	
 }

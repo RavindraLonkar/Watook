@@ -10,6 +10,7 @@ import com.watook.model.Prefernces;
 import com.watook.model.User;
 import com.watook.model.UserNearBy;
 import com.watook.utils.CalculateDistance;
+import com.watook.utils.CommonUtilities;
 import com.watook.v1.dao.UserDao;
 
 @Service
@@ -41,9 +42,9 @@ public class UserServiceImpl implements UserService {
 		Double distance;
 		List<UserNearBy> nearByList = new ArrayList<UserNearBy>();
 		for (UserNearBy user : userList) {
-			distance = CalculateDistance.getDistance(Float.parseFloat(userObj.getLongitude()),
-					Float.parseFloat(userObj.getLatitude()), Float.parseFloat(user.getLongitude()),
-					Float.parseFloat(user.getLatitude()));
+			distance = CalculateDistance.getDistance(Float.parseFloat(userObj.getLatitude()),
+					Float.parseFloat(userObj.getLongitude()), Float.parseFloat(user.getLatitude()),
+					Float.parseFloat(user.getLongitude()));
 			if (distance < distanceRange) {
 				user.setDistance((distance).toString());
 				nearByList.add(user);
@@ -54,7 +55,12 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getUser(String userId, String requestId) {
-		return userDao.getUser(userId, requestId);
+		User data = new User();
+		data = userDao.getUser(userId, requestId);
+		data.setOverallRating(userDao.overallRatingCount(requestId));
+		String date = CommonUtilities.CurrentDate();
+		data.setTodaysRating(userDao.todaysRatingCount(requestId, date));
+		return data;
 	}
 
 }

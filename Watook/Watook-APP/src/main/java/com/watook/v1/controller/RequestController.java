@@ -40,16 +40,16 @@ public class RequestController {
 		}
 		return response;
 	}
-	
-	@RequestMapping(value="/list")
-	public Response list(HttpServletRequest req)
-	{
-		String userId=req.getParameter("userId");
-		
+
+	@RequestMapping(value = "/list")
+	public Response list(HttpServletRequest req) {
+		String userId = req.getParameter("userId");
+		String requestStatus = req.getParameter("requestStatus");
+
 		Response response = null;
-		List<User> requestList=null;
+		List<User> requestList = null;
 		try {
-			requestList = requestService.list(userId);
+			requestList = requestService.list(userId, requestStatus);
 			if (requestList.isEmpty()) {
 				response = new Response(CommonConstants.SUCCESS, requestList, CommonConstants.RECORD_NOT_FOUND);
 			} else {
@@ -59,6 +59,26 @@ public class RequestController {
 			response = new Response(CommonConstants.FAIL, null, CommonConstants.SYSTEM_ERROR);
 		}
 		return response;
-		
+
+	}
+
+	@RequestMapping(value = "/rating",method = RequestMethod.POST)
+	public Response RequestRating(HttpServletRequest req) {
+		Response response = null;
+
+		String ratingId = req.getParameter("ratingId");
+		String ratingTo = req.getParameter("ratingTo");
+		Integer status;
+		try {
+			status = requestService.requestRating(ratingId, ratingTo);
+			if (status == null) {
+				response = new Response(CommonConstants.FAIL, null, CommonConstants.SYSTEM_ERROR);
+			} else {
+				response = new Response(CommonConstants.SUCCESS, status, null);
+			}
+		} catch (Exception e) {
+			response = new Response(CommonConstants.FAIL, null, CommonConstants.SYSTEM_ERROR);
+		}
+		return response;
 	}
 }

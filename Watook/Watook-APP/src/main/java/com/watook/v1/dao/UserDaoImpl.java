@@ -103,7 +103,8 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public List<UserNearBy> getUserNearByList(String userId,String agemin,String agemax,String maleinterest,String femaleinterest) {
+	public List<UserNearBy> getUserNearByList(String userId, String agemin, String agemax, String maleinterest,
+			String femaleinterest) {
 		MapSqlParameterSource parameters = new MapSqlParameterSource();
 		parameters.addValue("userId", Integer.parseInt(userId));
 		parameters.addValue("agemin", Integer.parseInt(agemin));
@@ -159,5 +160,22 @@ public class UserDaoImpl implements UserDao {
 		});
 
 		return list;
+	}
+
+	@Override
+	public String overallRatingCount(String userId) {
+		MapSqlParameterSource parameters = new MapSqlParameterSource();
+		parameters.addValue("userId", Integer.parseInt(userId));
+		NamedParameterJdbcTemplate namedJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+		return namedJdbcTemplate.queryForObject(CommonQueries.SP_GET_OVERALL_RATING, parameters, String.class);
+	}
+
+	@Override
+	public String todaysRatingCount(String userId, String Date) {
+		MapSqlParameterSource parameters = new MapSqlParameterSource();
+		parameters.addValue("userId", Integer.parseInt(userId));
+		parameters.addValue("date", Date);
+		NamedParameterJdbcTemplate namedJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+		return namedJdbcTemplate.queryForObject(CommonQueries.SP_GET_TODAYS_RATING, parameters, String.class);
 	}
 }
