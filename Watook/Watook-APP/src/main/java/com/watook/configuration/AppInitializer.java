@@ -46,5 +46,6 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
 
 		servlet.setLoadOnStartup(1);
 		servlet.addMapping("/");
+		servlet.addMapping("/api/*");
 	}
 }
