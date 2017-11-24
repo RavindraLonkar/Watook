@@ -12,9 +12,9 @@ $BODY$
 
 	
     
-      INSERT INTO txn_user(fbid,firstname,middlename,lastname,dob,genderid,contactmobile,contactmobile2,emailid,advertiseid,aboutyou,workemployer,worklocation,workposition,statusinfo,fbimages,
+      INSERT INTO txn_user(fbid,firstname,middlename,lastname,age,dob,genderid,contactmobile,contactmobile2,emailid,advertiseid,aboutyou,workemployer,worklocation,workposition,statusinfo,fbimages,
       profileimage,isactive,firebasetoken,createdby,createddate,lastmodifiedby,lastmodifieddate)
-      SELECT fbid,firstname,middlename,lastname,dob,genderid,contactmobile,contactmobile2,emailid,advertiseid,aboutyou,workemployer,worklocation,workposition,statusinfo,fbimages,
+      SELECT fbid,firstname,middlename,lastname,age,dob,genderid,contactmobile,contactmobile2,emailid,advertiseid,aboutyou,workemployer,worklocation,workposition,statusinfo,fbimages,
       profileimage,1,firebasetoken,1,now(),1,now() FROM json_populate_record(null::txn_user, userjson::json)
       WHERE NOT EXISTS (select 1 from txn_user where fbid = (select userJson::json->>'fbid') limit 1)
       RETURNING userid into result;
@@ -31,6 +31,9 @@ $BODY$
 
              ,lastname = case when (userJson::json->>'lastname') is null then (select lastname from txn_user where  fbid = (select userJson::json->>'fbid')) else
 			  (select userJson::json->>'lastname') end  
+
+	     ,age= case when (userJson::json->>'age') is null then (select age from txn_user where  fbid = (select userJson::json->>'age')) else
+			  (select userJson::json->>'age') end  
 			  
              ,dob =  case when (userJson::json->>'dob') is null then (select dob from txn_user where  fbid = (select userJson::json->>'fbid')) else
 			  (select userJson::json->>'dob')  end

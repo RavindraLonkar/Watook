@@ -21,6 +21,13 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User save(User user) {
+		Integer age = 0;
+		try {
+			age = CommonUtilities.getAge(user.getDob());
+		} catch (Exception e) {
+			System.out.println("Exception in age calculate:" + e.getMessage());
+		}
+		user.setAge(age.toString());
 		return userDao.save(user);
 	}
 
@@ -62,7 +69,7 @@ public class UserServiceImpl implements UserService {
 		data.setTodaysRating(userDao.todaysRatingCount(requestId, date));
 		return data;
 	}
-	
+
 	@Override
 	public User getUserProfile(String userId) {
 		User data = new User();

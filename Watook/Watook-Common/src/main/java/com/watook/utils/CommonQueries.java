@@ -2,9 +2,9 @@ package com.watook.utils;
 
 public class CommonQueries {
 	public static final String SP_GET_USER_PROFILE = "select * from txn_user where userid=:id and isactive=1";
-	
+
 	public static final String SP_GET_USERLIST = "select * from txn_user u left join txn_usertracking ut on ut.userid = u.userid where u.isactive=1";
-	
+
 	public static final String SP_GET_USERSETTING = "SELECT s.userid,s.distancerange,t.longitude,t.latitude,s.agemin,s.agemax,"
 			+ "COALESCE(s.femaleinterest,0) femaleinterest, COALESCE(s.maleinterest,0) maleinterest from txn_usersetting s inner join txn_usertracking t on s.userid=t.userid where s.userId = :id";
 
@@ -12,10 +12,10 @@ public class CommonQueries {
 			+ " inner join txn_usertracking ut on ut.userid = u.userid"
 			+ "	where u.userid!=:userId	and (u.age>=:agemin and u.age<=:agemax) and u.genderid in(:maleinterest,:femaleinterest) and u.isactive=1 and u.discoverable=1 ";
 
-	public static final String SP_GET_USER = "select * from txn_user u  " + "inner join txn_userrequest ur  "
-			+ "on ((ur.requestby=:id and ur.requestto=:requestId) or (ur.requestby=:requestId and ur.requestto=:id))  "
-			+ "inner join txn_usertracking ut 	on ut.userid = u.userid " + "where u.userid=:requestId "
-			+ " and  u.isactive=1 order by ur.lastmodifieddate desc limit 1";
+	public static final String SP_GET_USER = "select * from txn_user u left join txn_userrequest ur"
+			+ "  on ((ur.requestby=:id and ur.requestto=:requestId) or (ur.requestby=:requestId and ur.requestto=:id)) and ur.isactive=1"
+			+ "  inner join txn_usertracking ut 	on ut.userid = u.userid"
+			+ "  where u.userid=:requestId   and  u.isactive=1";
 
 	public static final String SP_GET_REQUEST_USERLIST = "select u.userid,u.firstname,u.lastname,u.age,u.profileimage,ut.latitude,ut.longitude,t.requestby"
 			+ " from txn_user u inner join txn_userrequest t"
