@@ -40,4 +40,21 @@ public class MasterController {
 		}
 		return response;
 	}
+	
+	@RequestMapping(value = "/termsAndCodition", method = RequestMethod.GET)
+	public Response getTermsandConditions(HttpServletRequest request) {
+		Response response = null;
+		try {
+			CodeValue codeValue = masterService.getTermsandConditions();
+				if (codeValue==null) {
+					response = new Response(CommonConstants.FAIL, null, CommonConstants.RECORD_NOT_FOUND);
+				} else {
+					response = new Response(CommonConstants.SUCCESS, codeValue, null);
+				}
+		} catch (Exception e) {
+			response = new Response(CommonConstants.FAIL, null, CommonConstants.SYSTEM_ERROR);
+			logger.info("Error In Master Controller getTermsandConditions: " + e.getMessage());
+		}
+		return response;
+	}
 }

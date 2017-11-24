@@ -19,4 +19,9 @@ public class MasterServiceImpl implements MasterService {
 		return masterDao.getCodeValueList();
 	}
 
+	@Override
+	public CodeValue getTermsandConditions() {
+		return masterDao.getTermsandConditions();
+	}
+
 }

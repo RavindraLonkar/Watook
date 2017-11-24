@@ -153,6 +153,21 @@ where NOT EXISTS(select * from CFG_CodeValue where codeTypeId = 7 and CodeValueI
 
 -----------------------------------------------
 
+--terms and condition codetype
+insert into cfg_codeType (CodeTypeID,CodeType,CodeTypeDescription,CreatedBy,CreatedDate,LastModifiedBy,LastModifiedDate) 
+select 8,'TermsAndCondition','TermsAndCondition',1,now(),1,now()
+where NOT EXISTS(select * from cfg_codeType where codeTypeId = 8)
+
+-- terms and condition codevalue 
+insert into CFG_CodeValue(CodeValueID, CodeTypeId, CodeValue, CodeValueDescription, DisplaySeqNo, IsDefault, IsDisplay, IsActive, CreatedBy, CreatedDate, LastModifiedBy, LastModifiedDate)
+select 801,8,'1.Terms And Condition For Watook','1.Terms And Condition For Watook', 1,0,1,1,1,now(),1,now()
+where NOT EXISTS(select * from CFG_CodeValue where codeTypeId = 1 and CodeValueID=801)
+
+
+-----------------------------------------------------
+
+
+
 
 ALTER Table txn_user
 ADD Column workemployer varchar(255);

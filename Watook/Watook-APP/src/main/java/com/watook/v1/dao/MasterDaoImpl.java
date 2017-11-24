@@ -7,8 +7,11 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.watook.model.CodeValue;
@@ -20,6 +23,8 @@ public class MasterDaoImpl implements MasterDao {
 	DataSource dataSource;
 
 	private static final String SP_GET_CODEVLAUE_LIST = "select type.codetype,codevalue.* from cfg_codevalue codevalue inner join cfg_codetype type on codevalue.codetypeid=type.codetypeid";
+	
+	private static final String SP_GET_TERMS_AND_CONDITION = "select * from cfg_codevalue where codevalueid=801 and codetypeid=8";
 
 	@Override
 	public List<CodeValue> getCodeValueList() {
@@ -39,6 +44,15 @@ public class MasterDaoImpl implements MasterDao {
 				return codeValue;
 			}
 		});
+	}
+
+	
+	@Override
+	public CodeValue getTermsandConditions() {
+		NamedParameterJdbcTemplate namedJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+		MapSqlParameterSource parameters = new MapSqlParameterSource();
+		CodeValue termsAndCondition = namedJdbcTemplate.queryForObject(SP_GET_TERMS_AND_CONDITION, parameters,new BeanPropertyRowMapper<CodeValue>());
+		return termsAndCondition;
 	}
 
 }

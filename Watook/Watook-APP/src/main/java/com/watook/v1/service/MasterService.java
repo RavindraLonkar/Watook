@@ -7,4 +7,6 @@ import com.watook.model.CodeValue;
 public interface MasterService {
 
 	List<CodeValue> getCodeValueList();
+	
+	CodeValue getTermsandConditions();
 }
