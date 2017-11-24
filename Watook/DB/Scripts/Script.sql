@@ -178,6 +178,9 @@ add column lastmodifieddate timestamp without time zone
 Alter table txn_user
 add column LastActive timestamp without time zone
 
+alter table txn_user 
+alter column dob type character varying(25) using dob::character varying(25)
+
 -----------------------------------------------------
 -- change name of the setting table id
 ALTER TABLE txn_usersetting RENAME COLUMN id TO settingId
