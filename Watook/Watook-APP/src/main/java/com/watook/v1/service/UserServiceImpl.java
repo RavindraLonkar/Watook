@@ -13,12 +13,26 @@ import com.watook.utils.CalculateDistance;
 import com.watook.utils.CommonUtilities;
 import com.watook.v1.dao.UserDao;
 
+/**
+ * @author Ravindra.Lonkar
+ * @cretaedDate : 10/10/2017
+ * @description : This class is used to save and get user information.
+ *
+ */
 @Service
 public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserDao userDao;
 
+	/**
+	 * @author Ravindra.Lonkar
+	 * @date 14/10/2017
+	 * @param 
+	 * @description:This method is used to save user data.
+	 * @return: list of users.
+	 * 
+	 */
 	@Override
 	public User save(User user) {
 		Integer age = 0;
@@ -31,6 +45,14 @@ public class UserServiceImpl implements UserService {
 		return userDao.save(user);
 	}
 
+	/**
+	 * @author Ravindra.Lonkar
+	 * @date 12/10/2017
+	 * @param 
+	 * @description:This method is for get all active user list from system.
+	 * @return: list of users.
+	 * 
+	 */
 	@Override
 	public List<User> getUserList() {
 		return userDao.getUserList();

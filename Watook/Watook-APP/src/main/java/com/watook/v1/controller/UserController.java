@@ -23,6 +23,12 @@ import com.watook.utils.CommonConstants;
 import com.watook.utils.CommonUserMessages;
 import com.watook.v1.service.UserService;
 
+/**
+ * @author Ravindra.Lonkar
+ * @cretaedDate : 10/10/2017
+ * @description : This class is used to save and get user information.
+ *
+ */
 @RestController
 @RequestMapping("/v1/user")
 public class UserController {
@@ -34,6 +40,14 @@ public class UserController {
 
 	private static final Logger logger = Logger.getLogger(UserController.class);
 
+	/**
+	 * @author Ravindra.Lonkar
+	 * @date 10/10/2017
+	 * @param request(applicationId and fbToken)
+	 * @description:This method is for authenticate user against the facebook using fbtoken.
+	 * @return: application token.
+	 * 
+	 */
 	@RequestMapping(value = "/auth", method = RequestMethod.GET)
 	public Response getUserAuth(HttpServletRequest request) {
 
@@ -60,6 +74,15 @@ public class UserController {
 
 	}
 
+
+	/**
+	 * @author Ravindra.Lonkar
+	 * @date 12/10/2017
+	 * @param 
+	 * @description:This method is for get all active user list from system.
+	 * @return: list of users.
+	 * 
+	 */
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public Response getUserList() {
 		Response response = null;
@@ -77,8 +100,14 @@ public class UserController {
 		return response;
 	}
 
-	// ------------------- save User ---------------------
-
+	/**
+	 * @author Ravindra.Lonkar
+	 * @date 14/10/2017
+	 * @param 
+	 * @description:This method is used to save user data.
+	 * @return: list of users.
+	 * 
+	 */
 	@RequestMapping(value = "/save", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Response save(@RequestBody User user) {
 		Response response = null;
@@ -96,6 +125,14 @@ public class UserController {
 		return response;
 	}
 
+	/**
+	 * @author Ravindra.Lonkar
+	 * @date 14/10/2017
+	 * @param 
+	 * @description:This method is used to save user data.
+	 * @return: list of users.
+	 * 
+	 */
 	private FBAuthResponse fbAuthentication(String fbToken) {
 		FBAuthResponse fBAuthResponse = null;
 		try {
@@ -116,7 +153,7 @@ public class UserController {
 		String userId = request.getParameter("userId");
 		try {
 			List<UserNearBy> userList = userService.getUserNearByList(userId);
-			if (userList==null || userList.isEmpty()) {
+			if (userList == null || userList.isEmpty()) {
 				response = new Response(CommonConstants.SUCCESS, userList, CommonConstants.RECORD_NOT_FOUND);
 			} else {
 				response = new Response(CommonConstants.SUCCESS, userList, null);
@@ -134,7 +171,7 @@ public class UserController {
 		String userId = request.getParameter("userId");
 		String requestId = request.getParameter("requestId");
 		try {
-			User user = userService.getUser(userId,requestId);
+			User user = userService.getUser(userId, requestId);
 			if (user == null) {
 				response = new Response(CommonConstants.FAIL, null, CommonConstants.SYSTEM_ERROR);
 			} else {
@@ -145,22 +182,22 @@ public class UserController {
 		}
 		return response;
 	}
-	
+
 	// get user data
-		@RequestMapping(value = "/profile", method = RequestMethod.GET)
-		public Response getUserProfile(HttpServletRequest request) {
-			Response response = null;
-			String userId = request.getParameter("userId");
-			try {
-				User user = userService.getUserProfile(userId);
-				if (user == null) {
-					response = new Response(CommonConstants.FAIL, null, CommonConstants.SYSTEM_ERROR);
-				} else {
-					response = new Response(CommonConstants.SUCCESS, user, null);
-				}
-			} catch (Exception e) {
+	@RequestMapping(value = "/profile", method = RequestMethod.GET)
+	public Response getUserProfile(HttpServletRequest request) {
+		Response response = null;
+		String userId = request.getParameter("userId");
+		try {
+			User user = userService.getUserProfile(userId);
+			if (user == null) {
 				response = new Response(CommonConstants.FAIL, null, CommonConstants.SYSTEM_ERROR);
+			} else {
+				response = new Response(CommonConstants.SUCCESS, user, null);
 			}
-			return response;
+		} catch (Exception e) {
+			response = new Response(CommonConstants.FAIL, null, CommonConstants.SYSTEM_ERROR);
 		}
+		return response;
+	}
 }

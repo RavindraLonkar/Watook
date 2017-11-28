@@ -15,6 +15,12 @@ import com.watook.model.Response;
 import com.watook.utils.CommonConstants;
 import com.watook.v1.service.MasterService;
 
+/**
+ * @author namdev.arade
+ * @cretaedDate : 26/10/2017
+ * @description : This class is used to get master data information.  
+ *
+ */
 @RestController
 @RequestMapping("v1/master")
 public class MasterController {
@@ -24,6 +30,13 @@ public class MasterController {
 	@Autowired
 	MasterService masterService;
 
+	/**
+	 * @date 26/10/2017
+	 * @param request
+	 * @description:This method is for get master of codevalue.
+	 * @return: All codevalues.
+	 * 
+	 */
 	@RequestMapping(value = "/codevalue", method = RequestMethod.GET)
 	public Response getCodeValueList(HttpServletRequest request) {
 		Response response = null;
@@ -41,6 +54,14 @@ public class MasterController {
 		return response;
 	}
 	
+
+	/**
+	 * @date 27/11/2017
+	 * @param request
+	 * @description:This method is for get terms and conditions.
+	 * @return: All codevalues.
+	 * 
+	 */
 	@RequestMapping(value = "/termsAndCodition", method = RequestMethod.GET)
 	public Response getTermsandConditions(HttpServletRequest request) {
 		Response response = null;

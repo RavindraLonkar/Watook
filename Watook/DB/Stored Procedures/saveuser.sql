@@ -33,7 +33,7 @@ $BODY$
 			  (select userJson::json->>'lastname') end  
 
 	     ,age= case when (userJson::json->>'age') is null then (select age from txn_user where  fbid = (select userJson::json->>'age')) else
-			  (select userJson::json->>'age') end  
+			  (select cast(userJson::json->>'age' as int)) end  
 			  
              ,dob =  case when (userJson::json->>'dob') is null then (select dob from txn_user where  fbid = (select userJson::json->>'fbid')) else
 			  (select userJson::json->>'dob')  end
@@ -91,6 +91,5 @@ $BODY$
  $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100;
-
 
 

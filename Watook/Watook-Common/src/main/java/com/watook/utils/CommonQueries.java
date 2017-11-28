@@ -32,4 +32,7 @@ public class CommonQueries {
 
 	public static final String SP_GET_OVERALL_RATING = "select count(*) overallRating from txn_profilerating  where ratingto=:userId";
 
+	public static final String SP_GET_CODEVLAUE_LIST = "select type.codetype,codevalue.* from cfg_codevalue codevalue inner join cfg_codetype type on codevalue.codetypeid=type.codetypeid";
+
+	public static final String SP_GET_TERMS_AND_CONDITION = "select * from cfg_codevalue where codevalueid=801 and codetypeid=8";
 }

@@ -25,12 +25,26 @@ import com.watook.utils.CommonProcedures;
 import com.watook.utils.CommonQueries;
 import com.watook.utils.FieldNamingPolicies;
 
+/**
+ * @author Ravindra.Lonkar
+ * @cretaedDate : 10/10/2017
+ * @description : This class is used to save and get user information.
+ *
+ */
 @Repository
 public class UserDaoImpl implements UserDao {
 
 	@Autowired
 	DataSource dataSource;
 
+	/**
+	 * @author Ravindra.Lonkar
+	 * @date 12/10/2017
+	 * @param 
+	 * @description:This method is for get all active user list from system.
+	 * @return: list of users.
+	 * 
+	 */
 	@Override
 	public List<User> getUserList() {
 		JdbcTemplate jdbcTemplate = new JdbcTemplate();
@@ -77,6 +91,14 @@ public class UserDaoImpl implements UserDao {
 		return list;
 	}
 
+	/**
+	 * @author Ravindra.Lonkar
+	 * @date 14/10/2017
+	 * @param 
+	 * @description:This method is used to save user data.
+	 * @return: list of users.
+	 * 
+	 */
 	@Override
 	public User save(User user) {
 		JdbcTemplate jdbcTemplate = new JdbcTemplate();
