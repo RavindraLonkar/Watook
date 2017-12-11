@@ -27,7 +27,6 @@ import com.watook.v1.service.UserService;
  * @author Ravindra.Lonkar
  * @cretaedDate : 10/10/2017
  * @description : This class is used to save and get user information.
- *
  */
 @RestController
 @RequestMapping("/v1/user")

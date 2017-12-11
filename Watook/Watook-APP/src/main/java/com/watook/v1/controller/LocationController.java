@@ -15,6 +15,11 @@ import com.watook.utils.CommonUserMessages;
 import com.watook.utils.CommonUtilities;
 import com.watook.v1.service.LocationService;
 
+/**
+ * @author Namdev
+ * Dec 11, 2017 9:45:14 PM
+ * Description : Users Location API's 
+ */
 @RestController
 @RequestMapping("/v1/location")
 public class LocationController {
@@ -23,7 +28,10 @@ public class LocationController {
 	private LocationService locationService;
 
 	private static final Logger logger = Logger.getLogger(UserController.class);
-
+	/**
+	 * @param location
+	 * @return
+	 */
 	@RequestMapping(value = "/save", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Response saveLocation(@RequestBody Location location) {
 		Response response = null;

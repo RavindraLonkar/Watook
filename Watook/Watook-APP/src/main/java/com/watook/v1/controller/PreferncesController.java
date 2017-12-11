@@ -16,6 +16,11 @@ import com.watook.utils.CommonConstants;
 import com.watook.utils.CommonUserMessages;
 import com.watook.v1.service.PreferncesService;
 
+/**
+ * @author Namdev
+ * Date : Dec 11, 2017 9:45:31 PM
+ * Description : User Settings and Preferances API's
+ */
 @RestController
 @RequestMapping("/v1/prefernces")
 public class PreferncesController {
@@ -24,7 +29,11 @@ public class PreferncesController {
 	PreferncesService settingService;
 
 	private static final Logger logger = Logger.getLogger(UserController.class);
-
+	
+	/**
+	 * @param setting
+	 * @return
+	 */
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public Response save(@RequestBody Prefernces setting) {
 		Response response = null;
@@ -42,7 +51,11 @@ public class PreferncesController {
 		}
 		return response;
 	}
-
+	
+	/**
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value = "/get", method = RequestMethod.GET)
 	public Response get(HttpServletRequest request) {
 		Response response = null;

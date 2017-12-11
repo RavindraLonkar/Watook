@@ -24,6 +24,10 @@ public class RequestController {
 	@Autowired
 	RequestService requestService;
 
+	/**
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value = "/save", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Response saveRequest(@RequestBody Request request) {
 		Response response = null;
@@ -40,7 +44,11 @@ public class RequestController {
 		}
 		return response;
 	}
-
+	
+	/**
+	 * @param req
+	 * @return
+	 */
 	@RequestMapping(value = "/list")
 	public Response list(HttpServletRequest req) {
 		String userId = req.getParameter("userId");
@@ -62,8 +70,12 @@ public class RequestController {
 
 	}
 
+	/**
+	 * @param req
+	 * @return
+	 */
 	@RequestMapping(value = "/rating",method = RequestMethod.POST)
-	public Response RequestRating(HttpServletRequest req) {
+	public Response requestRating(HttpServletRequest req) {
 		Response response = null;
 
 		String ratingId = req.getParameter("ratingId");

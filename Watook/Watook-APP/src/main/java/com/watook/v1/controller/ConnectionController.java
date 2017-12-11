@@ -20,7 +20,11 @@ public class ConnectionController {
 
 	@Autowired
 	ConnectionService connectionService;
-
+	
+	/**
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value = "/friends", method = RequestMethod.GET)
 	public Response getFriendList(HttpServletRequest request) {
 		Response response = null;

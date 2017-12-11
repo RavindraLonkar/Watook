@@ -19,7 +19,6 @@ import com.watook.v1.service.MasterService;
  * @author namdev.arade
  * @cretaedDate : 26/10/2017
  * @description : This class is used to get master data information.  
- *
  */
 @RestController
 @RequestMapping("v1/master")
@@ -35,7 +34,6 @@ public class MasterController {
 	 * @param request
 	 * @description:This method is for get master of codevalue.
 	 * @return: All codevalues.
-	 * 
 	 */
 	@RequestMapping(value = "/codevalue", method = RequestMethod.GET)
 	public Response getCodeValueList(HttpServletRequest request) {
@@ -60,7 +58,6 @@ public class MasterController {
 	 * @param request
 	 * @description:This method is for get terms and conditions.
 	 * @return: All codevalues.
-	 * 
 	 */
 	@RequestMapping(value = "/termsAndCodition", method = RequestMethod.GET)
 	public Response getTermsandConditions(HttpServletRequest request) {
